@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Green LMS-The Library Management System</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <!-- Plugins CSS -->    
+    <!-- <link rel="stylesheet" href="assets/plugins/prism/prism.css"> -->
+    <!-- <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css"> -->
+
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        .myimg {
+            width: 100% !important;
+            /*height: 400px !important;*/
+            border:2px solid #ddd;
+        }
+
+        .myimgbig {
+            width: 100% !important;
+            border:2px solid #ddd;
+        }
+
+        .single-item {
+            margin-bottom: 20px;
+        }
+
+        #lightbox #imageContainer img {
+            max-width: 600px;
+        }
+       
+       .modal-dialog{
+            position: relative;
+            display: table; /* This is important */ 
+            overflow-y: auto;    
+            overflow-x: auto;
+            width: auto;
+            min-width: 300px;   
+        }
+
+    </style>
+</head> 
+
+<body class="body-green">
+    <div class="page-wrapper">
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="index.html">
+                            <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                            <span class="text-highlight">Green</span><span class="text-bold">LMS</span>
+                        </a>
+                    </h1>
+                </div><!--//branding-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Features</li>
+                </ol>
+            </div><!--//container-->
+        </header><!--//header-->
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><span aria-hidden="true" class="icon icon_puzzle_alt"></span> Features</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Last updated: March 2020</div>
+                </div><!--//doc-header-->
+                <div class="doc-body row" >
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="app-components" class="doc-section">
+                                <h2 class="section-title">Installation Process</h2>
+                                <div id="install" class="section-block">
+                                    <p class="block-title">Here we give some screen shot how to install our script. Follow step by step to successfully install our script.</p>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>1. Script default require php extension/setting check list</h6>
+                                            <img class="img-fluid myimg" src="features/i1.png" alt="screenshot"/>
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>2. Database Setup</h6>
+                                            <img class="img-fluid myimg" src="features/i2.png" alt="screenshot"/>
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>3. Setting Site & Admin Information Setup</h6>
+                                            <img class="img-fluid myimg" src="features/i3.png" alt="screenshot"/>
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>4. Complate Setup</h6>
+                                            <img class="img-fluid myimg" src="features/i4.png" alt="screenshot"/>
+                                        </div>
+                                    </div><!--//row-->
+                                </div><!--//section-block-->
+                                <h2 class="section-title">All Feature List</h2>
+                                <div id="features" class="section-block">
+                                    <p class="block-title">Here we give some feature and if you want to see full feature you can visit our site.</p>
+                                    <div class="row">
+                                        <div id="dashboard" class="col-md-12 col-12">
+                                            <h6>Dashboard</h6>
+                                            <p>In Dashboard,  have income and expense chart, So you can easily see month wise income and expense graph Also have a global chatbox and global mailbox using this you can easily send user notification.</p>
+                                            <img class="img-fluid myimgbig" src="features/d1.png" alt="screenshot" />
+                                        </div>
+                                        <div id="bookissue" class="col-md-12 col-12 single-item">
+                                            <h6>Book Issue</h6>
+                                            <p>In Book Issue Module, you can be issued a book for any member.</p>
+                                            <img class="img-fluid myimgbig" src="features/b1.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Book Issue Add</h6>
+                                            <img class="img-fluid myimg" src="features/b2.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Book Issue View</h6>
+                                            <img class="img-fluid myimg" src="features/b3.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Book Issue Payment</h6>
+                                            <img class="img-fluid myimg" src="features/b4.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Book Issue Renew and Renew History</h6>
+                                            <img class="img-fluid myimg" src="features/b5.png" alt="screenshot" />
+                                        </div>
+                                        <div id="member" class="col-md-12 col-12 single-item">
+                                            <h6>Members</h6>
+                                            <p>In Member module, you can add, edit, update, view, delete any member. Here you also enable/diasable any member</p>
+                                            <img class="img-fluid" src="features/m1.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Member Add</h6>
+                                            <img class="img-fluid" src="features/m2.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Member View</h6>
+                                            <img class="img-fluid myimg" src="features/m3.png" alt="screenshot" />
+                                        </div>
+                                        <div id="book" class="col-md-12 col-12 single-item">
+                                            <h6>Books</h6>
+                                            <p>In Book module, you can add, edit, update, view, delete any book.</p>
+                                            <img class="img-fluid myimgbig" src="features/bo1.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Book Add</h6>
+                                            <img class="img-fluid myimg" src="features/bo2.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Book View</h6>
+                                            <img class="img-fluid myimg" src="features/bo3.png" alt="screenshot" />
+                                        </div>
+                                        <div id="requestbook" class="col-md-12 col-12 single-item">
+                                            <h6>Request Book</h6>
+                                            <p>In Request Book module, user can request for any book Add systemadmin can add this book in Book module</p>
+                                            <img class="img-fluid myimgbig" src="features/r1.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Add Request Book</h6>
+                                            <img class="img-fluid myimg" src="features/r2.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Request Book View</h6>
+                                            <img class="img-fluid myimg" src="features/r3.png" alt="screenshot" />
+                                        </div>
+                                        <div id="barcode" class="col-md-12 col-12 single-item">
+                                            <h6>Barcode</h6>
+                                            <img class="img-fluid myimg" src="features/barcode.png" alt="screenshot" />
+                                        </div>
+                                        <div id="storebook" class="col-md-12 col-12 single-item">
+                                            <h6>Store Book Category</h6>
+                                            <img class="img-fluid myimg" src="features/store-book-category.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Store Book</h6>
+                                            <img class="img-fluid myimg" src="features/storebook.png" alt="screenshot" />
+                                        </div>
+                                        <div id="order" class="col-md-12 col-12 single-item">
+                                            <h6>Order</h6>
+                                            <img class="img-fluid myimg" src="features/order.png" alt="screenshot" />
+                                        </div>
+                                        <div id="emailsend" class="col-md-12 col-12 single-item">
+                                            <h6>Email Send</h6>
+                                            <p>Using email send module you can send email all register member or guest member.</p>
+                                            <img class="img-fluid myimgbig" src="features/em1.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Email Template</h6>
+                                            <p>Using email template module you can create any kind of dynamic email template using some predefind tag.</p>
+                                            <img class="img-fluid myimg" src="features/email.png" alt="screenshot" />
+                                        </div>
+                                        <div id="income" class="col-md-12 col-12 single-item">
+                                            <h6>Income</h6>
+                                            <p>Using Income module you can add, edit, update, delete any kind of income.</p>
+                                            <img class="img-fluid myimgbig" src="features/in1.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Income Add</h6>
+                                            <img class="img-fluid myimg" src="features/in2.png" alt="screenshot" />
+                                        </div>
+                                        <div id="expense" class="col-md-12 col-12 single-item">
+                                            <h6>Expense</h6>
+                                            <p>Using Expense module you can add, edit, update, delete any kind of expense.</p>
+                                            <img class="img-fluid myimgbig" src="features/ex1.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Expense Add</h6>
+                                            <img class="img-fluid myimg" src="features/ex2.png" alt="screenshot" />
+                                        </div>
+                                        <div id="administrator" class="col-md-12 col-12 single-item">
+                                            <h6>Administrator</h6>
+                                            <p>Systemadmin can set can make dynamic role here.</p>
+                                            <img class="img-fluid myimgbig" src="features/role.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Permission</h6>
+                                            <p>Permission Module give permisson of module each role type member.System admin control member permission here</p>
+                                            <img class="img-fluid myimgbig" src="features/permission.png" alt="screenshot" />
+                                        </div>
+                                        <div id="setting" class="col-md-12 col-12 single-item">
+                                            <h6>Setting</h6>
+                                            <p>In Setting module system admin can setup system setting</p>
+                                            <img class="img-fluid myimgbig" src="features/general.png" alt="screenshot" />
+                                        </div>
+                                        <div class="col-md-12 col-12 single-item">
+                                            <h6>Library Configure</h6>
+                                            <p>In Library Configure Module Systemadmin can setup renew limit, fine etc setting.</p>
+                                            <img class="img-fluid myimgbig" src="features/library.png" alt="screenshot" />
+                                        </div>
+                                        <div id="backup" class="col-md-12 col-12 single-item">
+                                            <h6>Backup</h6>
+                                            <p>In Backup module system admin can can bacup system database</p>
+                                            <img class="img-fluid myimgbig" src="features/backup.png" alt="screenshot" />
+                                        </div>
+                                        <div id="update" class="col-md-12 col-12 single-item">
+                                            <h6>Update</h6>
+                                            <p>In Update module system admin can update system</p>
+                                            <img class="img-fluid myimgbig" src="features/update.png" alt="screenshot" />
+                                        </div>
+                                        <div id="themesetting" class="col-md-12 col-12 single-item">
+                                            <h6>Theme Setting</h6>
+                                            <p>In Theme Setting module system admin can change system theme</p>
+                                            <img class="img-fluid myimgbig" src="features/themesetting.png" alt="screenshot" />
+                                        </div>
+                                    </div><!--//row-->
+                                    <p class="section-title">Frontend</p>
+                                    <div class="row">
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Frontend Page</h6>
+                                            <p>In Home page, you can see store book category and book category list.</p>
+                                            <img class="img-fluid myimgbig" src="features/frontpage.png" alt="screenshot" />
+                                        </div>
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Frontend Ebook</h6>
+                                            <p>In Frontend Ebook, Any one can read book here.</p>
+                                            <img class="img-fluid myimgbig" src="features/frontend-ebook.png" alt="screenshot" />
+                                        </div>
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Book Page</h6>
+                                            <p>In Book Page, you can check book info here</p>
+                                            <img class="img-fluid myimgbig" src="features/frontend-book-info.png" alt="screenshot" />
+                                        </div>
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Shop</h6>
+                                            <p>In Shop Page, you can see all store book product here.</p>
+                                            <img class="img-fluid myimgbig" src="features/frontend-shop.png" alt="screenshot" />
+                                        </div>
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Shop Details</h6>
+                                            <img class="img-fluid myimgbig" src="features/frontend-shop-details.png" alt="screenshot" />
+                                        </div>
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Frontend Contact</h6>
+                                            <p>In Barcode Report, you can receive mail here.</p>
+                                            <img class="img-fluid myimgbig" src="features/frontend-contact.png" alt="screenshot" />
+                                        </div>
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Cart Page</h6>
+                                            <img class="img-fluid myimgbig" src="features/frontend-cart.png" alt="screenshot" />
+                                        </div>
+                                        <div id="frontend" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">My Order</h6>
+                                            <img class="img-fluid myimgbig" src="features/frontend-order-page.png" alt="screenshot" />
+                                        </div>
+                                    </div>
+                                    <p class="section-title">Report Module</p>
+                                    <div class="row">
+                                        <div id="reports" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Book Report</h6>
+                                            <p>In Book Report, you can check you book status by filltering book category, book name and book status(availale or not available).</p>
+                                            <img class="img-fluid myimgbig" src="features/bookreport.png" alt="screenshot" />
+                                        </div>
+                                        <div id="reports" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Book Issue Report</h6>
+                                            <p>In Book Report, you can check issue book status result.</p>
+                                            <img class="img-fluid myimgbig" src="features/bookissuereport.png" alt="screenshot" />
+                                        </div>
+                                        <div id="reports" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Member Report</h6>
+                                            <p>In Member Report, you can check memeber info here</p>
+                                            <img class="img-fluid myimgbig" src="features/memberreport.png" alt="screenshot" />
+                                        </div>
+                                        <div id="reports" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">ID Card Report</h6>
+                                            <p>In Id Card Report, you can print id card.</p>
+                                            <img class="img-fluid myimgbig" src="features/idcardreport.png" alt="screenshot" />
+                                        </div>
+                                        <div id="reports" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Transaction Report</h6>
+                                            <p>In Transaction Report, you can check all income / expense in transaction report.</p>
+                                            <img class="img-fluid myimgbig" src="features/transactionreport.png" alt="screenshot" />
+                                        </div>
+                                        <div id="reports" class="col-md-12 col-12">
+                                            <br>
+                                            <h6 class="block-title">Barcode Report</h6>
+                                            <p>In Barcode Report, you can generate barcode all book.</p>
+                                            <img class="img-fluid myimgbig" src="features/barcode.png" alt="screenshot" />
+                                        </div>
+                                    </div>
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+                        </div><!--//content-inner-->
+                    </div><!--//doc-content-->
+                    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+                        <div id="doc-nav" class="doc-nav">
+                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                <a class="nav-link scrollto" href="#app-components">App Features</a>
+                                <nav class="doc-sub-menu nav flex-column">
+                                    <a class="nav-link scrollto" href="#install">Installation</a>
+                                    <a class="nav-link scrollto" href="#dashboard">Dashboard</a>
+                                    <a class="nav-link scrollto" href="#bookissue">Book Issue</a>
+                                    <a class="nav-link scrollto" href="#member">Member</a>
+                                    <a class="nav-link scrollto" href="#book">Book</a>
+                                    <a class="nav-link scrollto" href="#requestbook">Request Book</a>
+                                    <a class="nav-link scrollto" href="#barcode">Barcode</a>
+                                    <a class="nav-link scrollto" href="#storebook">Storebook</a>
+                                    <a class="nav-link scrollto" href="#order">Order</a>
+                                    <a class="nav-link scrollto" href="#emailsend">Email Send</a>
+                                    <a class="nav-link scrollto" href="#income">Income</a>
+                                    <a class="nav-link scrollto" href="#expense">Expense</a>
+                                    <a class="nav-link scrollto" href="#administrator">Administrator</a>
+                                    <a class="nav-link scrollto" href="#setting">Setting</a>
+                                    <a class="nav-link scrollto" href="#backup">Backup</a>
+                                    <a class="nav-link scrollto" href="#update">Update</a>
+                                    <a class="nav-link scrollto" href="#themesetting">Theme Setting</a>
+                                </nav>
+                                <a class="nav-link scrollto" href="#frontend">Frontend</a>
+                                <a class="nav-link scrollto" href="#reports">Reports</a>
+                            </nav><!--//doc-menu-->
+                        </div><!--//doc-nav-->
+                    </div><!--//doc-sidebar-->
+                </div><!--//doc-body-->              
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+    </div><!--//page-wrapper-->
+    <footer id="footer" class="footer text-center">
+        <div class="container">
+            <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="https://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for developers</small>
+            
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+
+    <!-- Main Javascript -->          
+    <script type="text/javascript" src="assets/plugins/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>  
+    <script type="text/javascript" src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>                                                              
+    <script type="text/javascript" src="assets/js/main.js"></script>
+</body>
+</html> 
+

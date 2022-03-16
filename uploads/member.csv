@@ -1,0 +1,5 @@
+*name,*dateofbirth,*gender,*email,*phone,address,photo,*username,*password,*roleID,*classeID
+admin,2021-09-17 00:00:00,Male,admin@localhost.com,,,,admin,,1,
+mem1,2000-09-30 00:00:00,Male,mem1@localhost.com,673338899,zgoum,default.png,mem1,,3,
+mem2,2000-09-30 00:00:00,Male,mem2@localhost.com,213654789,zgoum,default.png,mem2,,3,
+mem3,2000-09-30 00:00:00,Male,mem3@localhost.com,213654789,zgoum,default.png,mem3,,3,

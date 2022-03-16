@@ -1,0 +1,930 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+
+CREATE TABLE `book` (
+  `bookID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `author` varchar(100) NOT NULL,
+  `bookcategoryID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `isbnno` varchar(100) NOT NULL,
+  `coverphoto` varchar(200) NOT NULL,
+  `codeno` varchar(100) NOT NULL,
+  `rackID` int(11) DEFAULT NULL,
+  `editionnumber` varchar(100) NOT NULL,
+  `editiondate` datetime DEFAULT NULL,
+  `publisher` varchar(100) NOT NULL,
+  `publisheddate` datetime DEFAULT NULL,
+  `notes` text NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0= Book Available, 1= Book Not Available',
+  `deleted_at` tinyint(4) NOT NULL COMMENT '0= Book Available, 1=Book Deleted ',
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `bookcategory` (
+  `bookcategoryID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `coverphoto` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `bookissue` (
+  `bookissueID` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL,
+  `memberID` int(11) NOT NULL,
+  `bookcategoryID` int(11) NOT NULL,
+  `bookID` int(11) NOT NULL,
+  `bookno` int(11) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  `issue_date` datetime NOT NULL,
+  `expire_date` datetime NOT NULL,
+  `renewed` tinyint(4) NOT NULL,
+  `max_renewed_limit` tinyint(4) NOT NULL,
+  `book_fine_per_day` decimal(10,2) NOT NULL,
+  `fineamount` decimal(10,2) NOT NULL,
+  `paymentamount` decimal(10,2) NOT NULL,
+  `discountamount` decimal(10,2) NOT NULL,
+  `paidstatus` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 = due,  1 = partial, 2 = Paid',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 = Issued,  1 = Return, 2 = Lost',
+  `deleted_at` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 = Not Deleted, 1 = Deleted',
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `bookitem` (
+  `bookitemID` int(11) NOT NULL,
+  `bookID` int(11) NOT NULL,
+  `bookno` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0= Book Available, 1= Book Issued, 2=Book Lost',
+  `deleted_at` tinyint(4) NOT NULL COMMENT '0= Book Available, 1= Book Not Available'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `chat` (
+  `chatID` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `ebook` (
+  `ebookID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `author` varchar(100) NOT NULL,
+  `coverphoto` varchar(200) NOT NULL,
+  `file` varchar(200) NOT NULL,
+  `file_original_name` varchar(200) NOT NULL,
+  `notes` text NOT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `emailsend` (
+  `emailsendID` int(11) NOT NULL,
+  `subject` varchar(200) NOT NULL,
+  `message` text NOT NULL,
+  `sender_name` text NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `sender_memberID` int(11) NOT NULL,
+  `sender_roleID` int(11) NOT NULL,
+  `emailtemplateID` int(11) NOT NULL DEFAULT '0',
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `on_deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=show, 1=delete'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `emailsetting` (
+  `optionkey` varchar(100) NOT NULL,
+  `optionvalue` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `emailsetting` (`optionkey`, `optionvalue`) VALUES
+('mail_driver', ''),
+('mail_host', ''),
+('mail_port', ''),
+('mail_username', ''),
+('mail_password', ''),
+('mail_encryption', '');
+
+CREATE TABLE `emailtemplate` (
+  `emailtemplateID` int(11) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `template` text NOT NULL,
+  `priority` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '1',
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `expense` (
+  `expenseID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `date` datetime NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `file` varchar(200) DEFAULT NULL,
+  `fileoriginalname` varchar(200) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `finehistory` (
+  `finehistoryID` int(11) NOT NULL,
+  `bookissueID` int(11) NOT NULL,
+  `bookstatusID` int(11) NOT NULL COMMENT '0 = Issued,  1 = Return, 2 = Lost',
+  `renewed` tinyint(4) NOT NULL,
+  `from_date` datetime DEFAULT NULL,
+  `to_date` datetime DEFAULT NULL,
+  `fineamount` decimal(10,2) NOT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `generalsetting` (
+  `optionkey` varchar(100) NOT NULL,
+  `optionvalue` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `generalsetting` (`optionkey`, `optionvalue`) VALUES
+('address', ''),
+('copyright_by', ''),
+('delivery_charge', 0),
+('ebook_download', 0),
+('email', ''),
+('frontend', 1),
+('logo', ''),
+('paypal_payment_method', 1),
+('phone', ''),
+('registration', ''),
+('settheme', 'blue'),
+('sitename', ''),
+('stripe_key', ''),
+('stripe_payment_method', 1),
+('stripe_secret', ''),
+('web_address', '');
+
+CREATE TABLE `income` (
+  `incomeID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `date` datetime NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `file` varchar(200) DEFAULT NULL,
+  `fileoriginalname` varchar(200) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `libraryconfigure` (
+  `libraryconfigureID` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL,
+  `max_issue_book` int(11) NOT NULL,
+  `max_renewed_limit` int(11) NOT NULL,
+  `per_renew_limit_day` int(11) NOT NULL,
+  `book_fine_per_day` decimal(11,0) NOT NULL,
+  `issue_off_limit_amount` decimal(11,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `libraryconfigure` (`libraryconfigureID`, `roleID`, `max_issue_book`, `max_renewed_limit`, `per_renew_limit_day`, `book_fine_per_day`, `issue_off_limit_amount`) VALUES
+(1, 1, 20, 20, 20, '20', '200'),
+(2, 2, 15, 15, 15, '15', '150'),
+(3, 3, 10, 10, 10, '10', '100'),
+(4, 4, 5, 5, 5, '5', '50');
+
+CREATE TABLE `member` (
+  `memberID` int(11) UNSIGNED NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `dateofbirth` datetime DEFAULT NULL,
+  `gender` varchar(15) DEFAULT NULL,
+  `religion` varchar(30) DEFAULT NULL,
+  `email` varchar(60) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `bloodgroup` varchar(20) NOT NULL,
+  `address` text,
+  `joinningdate` datetime DEFAULT NULL,
+  `photo` varchar(200) NOT NULL,
+  `username` varchar(60) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `roleID` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=New, 1=active, 2=Block',
+  `deleted_at` tinyint(4) DEFAULT '0' COMMENT '0 = Not Deleted, 1 = Deleted',
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `menu` (
+  `menuID` int(11) NOT NULL,
+  `menuname` varchar(128) NOT NULL,
+  `menulink` varchar(128) NOT NULL,
+  `menuicon` varchar(128) DEFAULT NULL,
+  `priority` int(11) NOT NULL DEFAULT '500',
+  `parentmenuID` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `menu` (`menuID`, `menuname`, `menulink`, `menuicon`, `priority`, `parentmenuID`, `status`) VALUES
+(1, 'dashboard', 'dashboard', 'fa fa-dashboard', 500, 0, 1),
+(2, 'bookissue', 'bookissue', 'fa lms-educational-book', 500, 0, 1),
+(3, 'member', 'member', 'fa fa-user-plus', 500, 0, 1),
+(4, 'ebook', 'ebook', 'fa lms-study', 500, 0, 1),
+(5, 'books', '#', 'fa lms-book', 500, 0, 1),
+(6, 'book', 'book', 'fa fa-book', 500, 5, 1),
+(7, 'rack', 'rack', 'fa lms-bookshelf', 500, 5, 1),
+(8, 'bookcategory', 'bookcategory', 'fa lms-notebook', 500, 5, 1),
+(9, 'bookbarcode', 'bookbarcode', 'fa fa-barcode', 500, 5, 1),
+(10, 'requestbook', 'requestbook', 'fa lms-professor', 500, 0, 1),
+(11, 'storemanagement', '#', 'fa fa-shopping-cart', 500, 0, 1),
+(12, 'order', 'order', 'fa fa-first-order', 500, 11, 1),
+(13, 'storebook', 'storebook', 'fa fa-book', 0, 11, 1),
+(14, 'storebookcategory', 'storebookcategory', 'fa lms-notebook', 0, 11, 1),
+(15, 'emailsend', 'emailsend', 'fa fa-envelope', 500, 0, 1),
+(16, 'account', '#', 'fa lms-merchant', 500, 0, 1),
+(17, 'income', 'income', 'fa lms-incomes', 500, 16, 1),
+(18, 'expense', 'expense', 'fa lms-salary', 500, 16, 1),
+(19, 'reports', '#', 'fa fa-clipboard', 500, 0, 1),
+(20, 'bookreport', 'bookreport', 'fa lms-library', 500, 19, 1),
+(21, 'bookissuereport', 'bookissuereport', 'fa lms-writing', 500, 19, 1),
+(22, 'memberreport', 'memberreport', 'fa lms-community', 500, 19, 1),
+(23, 'idcardreport', 'idcardreport', 'fa lms-id-card', 500, 19, 1),
+(24, 'transactionreport', 'transactionreport', 'fa fa-credit-card', 500, 19, 1),
+(25, 'bookbarcodereport', 'bookbarcodereport', 'fa fa-barcode', 0, 19, 1),
+(26, 'administrator', '#', 'fa fa-lock', 500, 0, 1),
+(27, 'menu', 'menu', 'fa fa-bars', 500, 26, 1),
+(28, 'role', 'role', 'fa fa-users', 500, 26, 1),
+(29, 'emailtemplate', 'emailtemplate', 'fa lms-template-design', 500, 26, 1),
+(30, 'permissions', 'permissions', 'fa fa-balance-scale', 500, 26, 1),
+(31, 'permissionlog', 'permissionlog', 'fa fa-key', 500, 26, 1),
+(32, 'update', 'update', 'fa fa-upload', 0, 26, 1),
+(33, 'backup', 'backup', 'fa fa-download', 0, 26, 1),
+(34, 'settings', '#', 'fa fa-cogs', 500, 0, 1),
+(35, 'generalsetting', 'generalsetting', 'fa fa-cog', 500, 34, 1),
+(36, 'emailsetting', 'emailsetting', 'fa lms-open-envelope', 500, 34, 1),
+(37, 'libraryconfigure', 'libraryconfigure', 'fa lms-settings', 500, 34, 1),
+(38, 'themesetting', 'themesetting', 'fa fa-paint-brush', 0, 34, 1),
+(39, 'paymentsetting', 'paymentsetting', 'fa fa-credit-card-alt', 0, 34, 1);
+
+CREATE TABLE `newsletter` (
+  `newsletterID` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `verify` int(11) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `orderitems` (
+  `orderitemID` bigint(20) UNSIGNED NOT NULL,
+  `orderID` bigint(20) UNSIGNED NOT NULL,
+  `storebookID` bigint(20) UNSIGNED NOT NULL,
+  `quantity` int(10) UNSIGNED NOT NULL,
+  `unit_price` double(13,2) UNSIGNED NOT NULL,
+  `subtotal` double(13,2) UNSIGNED NOT NULL,
+  `create_date` timestamp NULL DEFAULT NULL,
+  `modify_date` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `orders` (
+  `orderID` bigint(20) UNSIGNED NOT NULL,
+  `memberID` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_charge` double(13,2) UNSIGNED NOT NULL,
+  `subtotal` double(13,2) UNSIGNED NOT NULL,
+  `total` double(13,2) UNSIGNED NOT NULL,
+  `payment_status` tinyint(3) UNSIGNED NOT NULL COMMENT 'PAID=5, UNPAID=10',
+  `payment_method` tinyint(3) UNSIGNED NOT NULL COMMENT 'CASH_ON_DELIVERY=5',
+  `paid_amount` double(13,2) UNSIGNED NOT NULL,
+  `discounted_price` double(13,2) UNSIGNED NOT NULL DEFAULT '0.00',
+  `misc` longtext COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(3) UNSIGNED NOT NULL COMMENT 'PENDING = 5, CANCEL = 10, REJECT = 15, ACCEPT = 20, PROCESS = 25, ON_THE_WAY = 30, COMPLETED = 35',
+  `notes` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `create_date` timestamp NULL DEFAULT NULL,
+  `modify_date` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `paymentanddiscount` (
+  `paymentanddiscountID` int(11) NOT NULL,
+  `bookissueID` int(11) NOT NULL,
+  `paymentamount` decimal(10,2) NOT NULL,
+  `discountamount` decimal(10,2) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `permissionlog` (
+  `permissionlogID` int(11) UNSIGNED NOT NULL,
+  `name` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `active` enum('yes','no') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `permissionlog` (`permissionlogID`, `name`, `description`, `active`) VALUES
+(1, 'dashboard', 'Dashboard', 'yes'),
+(2, 'bookissue', 'Book Issue', 'yes'),
+(3, 'bookissue_add', 'Book Issue Add', 'yes'),
+(4, 'bookissue_edit', 'Book Issue Edit', 'yes'),
+(5, 'bookissue_view', 'Book Issue View', 'yes'),
+(6, 'bookissue_delete', 'Book Issue Delete', 'yes'),
+(7, 'member', 'Member', 'yes'),
+(8, 'member_add', 'Member Add', 'yes'),
+(9, 'member_edit', 'Member Edit', 'yes'),
+(10, 'member_view', 'Member View', 'yes'),
+(11, 'member_delete', 'Member Delete', 'yes'),
+(12, 'ebook', 'Ebook', 'yes'),
+(13, 'ebook_add', 'Ebook Add', 'yes'),
+(14, 'ebook_edit', 'Ebook Edit', 'yes'),
+(15, 'ebook_view', 'Ebook View', 'yes'),
+(16, 'ebook_delete', 'Ebook Delete', 'yes'),
+(17, 'book', 'Book', 'yes'),
+(18, 'book_add', 'Book Add', 'yes'),
+(19, 'book_edit', 'Book Edit', 'yes'),
+(20, 'book_delete', 'Book Delete', 'yes'),
+(21, 'book_view', 'Book View', 'yes'),
+(22, 'rack', 'Rack', 'yes'),
+(23, 'rack_add', 'Rack Add', 'yes'),
+(24, 'rack_edit', 'Rack Edit', 'yes'),
+(25, 'rack_delete', 'Rack Delete', 'yes'),
+(26, 'bookcategory', 'Bool Category', 'yes'),
+(27, 'bookcategory_add', 'Book Category Add', 'yes'),
+(28, 'bookcategory_edit', 'Book Category Edit', 'yes'),
+(29, 'bookcategory_delete', 'Book Category Delete', 'yes'),
+(30, 'requestbook', 'Request Book', 'yes'),
+(31, 'requestbook_add', 'Request Book Add', 'yes'),
+(32, 'requestbook_edit', 'Request Book Edit', 'yes'),
+(33, 'requestbook_view', 'Request Book View', 'yes'),
+(34, 'requestbook_delete', 'Request Book Delete', 'yes'),
+(35, 'emailsend', 'emailsend', 'yes'),
+(36, 'emailsend_add', 'Emailsend Add', 'yes'),
+(37, 'emailsend_view', 'Emailsend View', 'yes'),
+(38, 'emailsend_delete', 'Emailsend Delete', 'yes'),
+(39, 'income', 'Income', 'yes'),
+(40, 'income_add', 'Income Add', 'yes'),
+(41, 'income_edit', 'Income Edit', 'yes'),
+(42, 'income_delete', 'Income Delete', 'yes'),
+(43, 'expense', 'Expense', 'yes'),
+(44, 'expense_add', 'Expense Add', 'yes'),
+(45, 'expense_edit', 'Expense Edit', 'yes'),
+(46, 'expense_delete', 'Expense Delete', 'yes'),
+(47, 'bookreport', 'Book Report', 'yes'),
+(48, 'bookissuereport', 'Book Issue Report', 'yes'),
+(49, 'memberreport', 'Member Report', 'yes'),
+(50, 'idcardreport', 'ID Card Report', 'yes'),
+(51, 'transactionreport', 'Transaction Report', 'yes'),
+(52, 'menu', 'Menu', 'yes'),
+(53, 'menu_add', 'Menu Add', 'yes'),
+(54, 'menu_edit', 'Menu Edit', 'yes'),
+(55, 'menu_delete', 'Menu Delete', 'yes'),
+(56, 'role', 'Role', 'yes'),
+(57, 'role_add', 'Role Add', 'yes'),
+(58, 'role_edit', 'Role Edit', 'yes'),
+(59, 'role_delete', 'Role Delete', 'yes'),
+(60, 'emailsetting', 'Email Setting', 'yes'),
+(61, 'emailtemplate', 'Email template', 'yes'),
+(62, 'emailtemplate_add', 'Email Template Add', 'yes'),
+(63, 'emailtemplate_edit', 'Email Template Edit', 'yes'),
+(64, 'emailtemplate_delete', 'Email Template Delete', 'yes'),
+(65, 'emailtemplate_view', 'Email Template', 'yes'),
+(66, 'permissions', 'Permissions', 'yes'),
+(67, 'permissionlog', 'Permissionlog', 'yes'),
+(68, 'permissionlog_add', 'Permissionlog', 'yes'),
+(69, 'permissionlog_edit', 'Permissionlog', 'yes'),
+(70, 'permissionlog_delete', 'Permissionlog', 'yes'),
+(71, 'generalsetting', 'General Setting', 'yes'),
+(73, 'libraryconfigure', 'Library Configure', 'yes'),
+(74, 'libraryconfigure_add', 'Library Configure Add', 'yes'),
+(75, 'libraryconfigure_edit', 'Library Configure Edit', 'yes'),
+(76, 'libraryconfigure_delete', 'Library Configure Delete', 'yes'),
+(77, 'themesetting', 'Theme Setting', 'yes'),
+(78, 'backup', 'Backup', 'yes'),
+(79, 'update', 'Update', 'yes'),
+(80, 'bookbarcodereport', 'Book Barcode Report', 'yes'),
+(81, 'bookbarcode', 'Book Barcode', 'yes'),
+(82, 'smssetting', 'SMS Setting', 'yes'),
+(83, 'storebookcategory', 'Store Book Category', 'yes'),
+(84, 'storebookcategory_add', 'Store Book Category Add', 'yes'),
+(85, 'storebookcategory_edit', 'Store Book Category Edit', 'yes'),
+(86, 'storebookcategory_view', 'Store Book Category View', 'yes'),
+(87, 'storebookcategory_delete', 'Store Book Category Delete', 'yes'),
+(88, 'storebook', 'Store Book', 'yes'),
+(89, 'storebook_add', 'Store Book Add', 'yes'),
+(90, 'storebook_edit', 'Store Book Edit', 'yes'),
+(91, 'storebook_view', 'Store Book View', 'yes'),
+(92, 'storebook_delete', 'Store Book Delete', 'yes'),
+(93, 'order', 'Order', 'yes'),
+(94, 'order_view', 'Order View', 'yes'),
+(95, 'order_edit', 'Order Edit', 'yes'),
+(96, 'paymentsetting', 'Payment Setting', 'yes');
+
+CREATE TABLE `permissions` (
+  `permissionlogID` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `permissions` (`permissionlogID`, `roleID`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(6, 1),
+(5, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(11, 1),
+(10, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(16, 1),
+(15, 1),
+(17, 1),
+(18, 1),
+(19, 1),
+(20, 1),
+(21, 1),
+(22, 1),
+(23, 1),
+(24, 1),
+(25, 1),
+(26, 1),
+(27, 1),
+(28, 1),
+(29, 1),
+(30, 1),
+(31, 1),
+(32, 1),
+(34, 1),
+(33, 1),
+(35, 1),
+(36, 1),
+(38, 1),
+(37, 1),
+(39, 1),
+(40, 1),
+(41, 1),
+(42, 1),
+(43, 1),
+(44, 1),
+(45, 1),
+(46, 1),
+(47, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(56, 1),
+(57, 1),
+(58, 1),
+(59, 1),
+(60, 1),
+(61, 1),
+(62, 1),
+(63, 1),
+(64, 1),
+(65, 1),
+(66, 1),
+(67, 1),
+(68, 1),
+(69, 1),
+(70, 1),
+(71, 1),
+(73, 1),
+(74, 1),
+(75, 1),
+(76, 1),
+(77, 1),
+(78, 1),
+(79, 1),
+(80, 1),
+(81, 1),
+(82, 1),
+(83, 1),
+(84, 1),
+(85, 1),
+(87, 1),
+(86, 1),
+(88, 1),
+(89, 1),
+(90, 1),
+(92, 1),
+(91, 1),
+(93, 1),
+(95, 1),
+(94, 1),
+(96, 1),
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2),
+(6, 2),
+(5, 2),
+(7, 2),
+(8, 2),
+(9, 2),
+(10, 2),
+(12, 2),
+(13, 2),
+(14, 2),
+(16, 2),
+(15, 2),
+(17, 2),
+(18, 2),
+(19, 2),
+(20, 2),
+(21, 2),
+(22, 2),
+(23, 2),
+(24, 2),
+(25, 2),
+(26, 2),
+(27, 2),
+(28, 2),
+(29, 2),
+(30, 2),
+(31, 2),
+(32, 2),
+(34, 2),
+(33, 2),
+(35, 2),
+(36, 2),
+(38, 2),
+(37, 2),
+(39, 2),
+(40, 2),
+(41, 2),
+(42, 2),
+(43, 2),
+(44, 2),
+(45, 2),
+(46, 2),
+(47, 2),
+(48, 2),
+(49, 2),
+(50, 2),
+(51, 2),
+(80, 2),
+(81, 2),
+(83, 2),
+(84, 2),
+(85, 2),
+(87, 2),
+(86, 2),
+(88, 2),
+(89, 2),
+(90, 2),
+(92, 2),
+(91, 2),
+(93, 2),
+(95, 2),
+(94, 2),
+(1, 3),
+(2, 3),
+(5, 3),
+(7, 3),
+(10, 3),
+(12, 3),
+(15, 3),
+(17, 3),
+(21, 3),
+(22, 3),
+(26, 3),
+(30, 3),
+(31, 3),
+(32, 3),
+(34, 3),
+(33, 3),
+(35, 3),
+(36, 3),
+(37, 3),
+(81, 3),
+(83, 3),
+(86, 3),
+(88, 3),
+(91, 3),
+(93, 3),
+(94, 3);
+
+CREATE TABLE `rack` (
+  `rackID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `requestbook` (
+  `requestbookID` int(11) NOT NULL,
+  `memberID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `author` varchar(100) NOT NULL,
+  `coverphoto` varchar(200) NOT NULL,
+  `bookcategoryID` int(11) NOT NULL,
+  `isbnno` varchar(100) DEFAULT NULL,
+  `editionnumber` varchar(50) DEFAULT NULL,
+  `editiondate` date DEFAULT NULL,
+  `publisher` varchar(50) DEFAULT NULL,
+  `publisheddate` date DEFAULT NULL,
+  `notes` text,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0= Request Book, 1= Request Book Accepet, 2= Request Book Rejected',
+  `deleted_at` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0= Request Book Not Deleted, 1=Request Book Deleted ',
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `resetpassword` (
+  `resetpasswordID` int(11) NOT NULL,
+  `username` varchar(60) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  `code` varchar(11) NOT NULL,
+  `memberID` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `modify_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `role` (
+  `roleID` int(11) UNSIGNED NOT NULL,
+  `role` varchar(30) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `create_roleID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL,
+  `modify_roleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `role` (`roleID`, `role`, `create_date`, `create_memberID`, `create_roleID`, `modify_date`, `modify_memberID`, `modify_roleID`) VALUES
+(1, 'Admin', '2019-09-25 20:19:22', 1, 1, '2019-09-25 20:19:22', 1, 1),
+(2, 'Librarian', '2019-09-25 20:19:32', 1, 1, '2020-01-29 23:32:27', 1, 1),
+(3, 'Member', '2019-09-25 20:19:39', 1, 1, '2019-11-03 00:03:22', 1, 1),
+(4, 'Customer', '2019-12-10 20:38:31', 1, 1, '2019-12-10 20:38:31', 1, 1);
+
+CREATE TABLE `storebook` (
+  `storebookID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `author` varchar(100) NOT NULL,
+  `storebookcategoryID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `isbnno` varchar(100) NOT NULL,
+  `coverphoto` varchar(200) NOT NULL,
+  `codeno` varchar(100) NOT NULL,
+  `editionnumber` varchar(100) NOT NULL,
+  `editiondate` datetime DEFAULT NULL,
+  `publisher` varchar(100) NOT NULL,
+  `publisheddate` datetime DEFAULT NULL,
+  `notes` text NOT NULL,
+  `description` text NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0= Book Available, 1= Book Not Available',
+  `deleted_at` tinyint(4) NOT NULL COMMENT '0= Book Available, 1=Book Deleted ',
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `storebookcategory` (
+  `storebookcategoryID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `coverphoto` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `create_date` datetime NOT NULL,
+  `create_memberID` int(11) NOT NULL,
+  `modify_date` datetime NOT NULL,
+  `modify_memberID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `storebookimage` (
+  `storebookimageID` int(11) NOT NULL,
+  `storebookID` int(11) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `client_name` varchar(255) NOT NULL,
+  `meta` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `updates` (
+  `updateID` int(11) NOT NULL,
+  `version` varchar(20) NOT NULL,
+  `date` date NOT NULL,
+  `memberID` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `description` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `book`
+  ADD PRIMARY KEY (`bookID`);
+
+ALTER TABLE `bookcategory`
+  ADD PRIMARY KEY (`bookcategoryID`);
+
+ALTER TABLE `bookissue`
+  ADD PRIMARY KEY (`bookissueID`);
+
+ALTER TABLE `bookitem`
+  ADD PRIMARY KEY (`bookitemID`);
+
+ALTER TABLE `chat`
+  ADD PRIMARY KEY (`chatID`);
+
+ALTER TABLE `ebook`
+  ADD PRIMARY KEY (`ebookID`);
+
+ALTER TABLE `emailsend`
+  ADD PRIMARY KEY (`emailsendID`);
+
+ALTER TABLE `emailsetting`
+  ADD UNIQUE KEY `frontendkey` (`optionkey`);
+
+ALTER TABLE `emailtemplate`
+  ADD PRIMARY KEY (`emailtemplateID`);
+
+ALTER TABLE `expense`
+  ADD PRIMARY KEY (`expenseID`);
+
+ALTER TABLE `finehistory`
+  ADD PRIMARY KEY (`finehistoryID`);
+
+ALTER TABLE `generalsetting`
+  ADD UNIQUE KEY `frontendkey` (`optionkey`);
+
+ALTER TABLE `income`
+  ADD PRIMARY KEY (`incomeID`);
+
+ALTER TABLE `libraryconfigure`
+  ADD PRIMARY KEY (`libraryconfigureID`);
+
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`memberID`);
+
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`menuID`);
+
+ALTER TABLE `newsletter`
+  ADD PRIMARY KEY (`newsletterID`);
+
+ALTER TABLE `orderitems`
+  ADD PRIMARY KEY (`orderitemID`);
+
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`orderID`);
+
+ALTER TABLE `paymentanddiscount`
+  ADD PRIMARY KEY (`paymentanddiscountID`);
+
+ALTER TABLE `permissionlog`
+  ADD PRIMARY KEY (`permissionlogID`);
+
+ALTER TABLE `rack`
+  ADD PRIMARY KEY (`rackID`);
+
+ALTER TABLE `requestbook`
+  ADD PRIMARY KEY (`requestbookID`);
+
+ALTER TABLE `resetpassword`
+  ADD PRIMARY KEY (`resetpasswordID`);
+
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`roleID`);
+
+ALTER TABLE `storebook`
+  ADD PRIMARY KEY (`storebookID`);
+
+ALTER TABLE `storebookcategory`
+  ADD PRIMARY KEY (`storebookcategoryID`);
+
+ALTER TABLE `storebookimage`
+  ADD PRIMARY KEY (`storebookimageID`);
+
+ALTER TABLE `updates`
+  ADD PRIMARY KEY (`updateID`);
+
+
+ALTER TABLE `book`
+  MODIFY `bookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `bookcategory`
+  MODIFY `bookcategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `bookissue`
+  MODIFY `bookissueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `bookitem`
+  MODIFY `bookitemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `chat`
+  MODIFY `chatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `ebook`
+  MODIFY `ebookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `emailsend`
+  MODIFY `emailsendID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `emailtemplate`
+  MODIFY `emailtemplateID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `expense`
+  MODIFY `expenseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `finehistory`
+  MODIFY `finehistoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `income`
+  MODIFY `incomeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `libraryconfigure`
+  MODIFY `libraryconfigureID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `member`
+  MODIFY `memberID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `menu`
+  MODIFY `menuID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+ALTER TABLE `newsletter`
+  MODIFY `newsletterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `orderitems`
+  MODIFY `orderitemID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `orders`
+  MODIFY `orderID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `paymentanddiscount`
+  MODIFY `paymentanddiscountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `permissionlog`
+  MODIFY `permissionlogID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+ALTER TABLE `rack`
+  MODIFY `rackID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `requestbook`
+  MODIFY `requestbookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `resetpassword`
+  MODIFY `resetpasswordID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `role`
+  MODIFY `roleID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `storebook`
+  MODIFY `storebookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `storebookcategory`
+  MODIFY `storebookcategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `storebookimage`
+  MODIFY `storebookimageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `updates`
+  MODIFY `updateID` int(11) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
