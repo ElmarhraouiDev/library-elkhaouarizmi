@@ -212,7 +212,7 @@ class Member extends Admin_Controller
         if ((int) $memberID) {
             $member = $this->member_m->get_single_member(array('memberID' => $memberID));
             $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'memberID' => $memberID]);
-            print_r($bookissue);
+            print_r(Count($bookissue));
             die;
             if (calculate($member)) {
                 $this->member_m->update_member(['deleted_at' => 1], $memberID);
