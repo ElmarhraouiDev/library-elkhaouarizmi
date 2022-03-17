@@ -214,8 +214,10 @@ class Member extends Admin_Controller
             $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'memberID' => $memberID]);
             $test = 0;
             foreach ($bookissue as $book){
-                print_r($book);
+                if( $book['status']==0)
+                   $test+=1;
             }
+            print_r($test);
             die;
             print_r(Count($bookissue));
             die;
