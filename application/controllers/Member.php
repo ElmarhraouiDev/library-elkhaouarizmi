@@ -211,6 +211,8 @@ class Member extends Admin_Controller
         $memberID = htmlentities(escapeString($this->uri->segment(3)));
         if ((int) $memberID) {
             $member = $this->member_m->get_single_member(array('memberID' => $memberID));
+            print_r($member);
+            die;
             if (calculate($member)) {
                 $this->member_m->update_member(['deleted_at' => 1], $memberID);
                 $this->session->set_flashdata('success', 'Success');
