@@ -224,7 +224,7 @@ class Member extends Admin_Controller
                     redirect(base_url('member/index'));
                 }
                 else{
-                    $this->session->set_flashdata('error', "ba9i 3ando ".$test." books",);
+                    $this->session->set_flashdata('error', "This account cannot be deleted. It has ".$test." borrowed books",);
                     redirect(base_url('member/index'));
                 }
 
