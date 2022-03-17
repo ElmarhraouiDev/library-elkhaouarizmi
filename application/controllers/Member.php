@@ -212,6 +212,11 @@ class Member extends Admin_Controller
         if ((int) $memberID) {
             $member = $this->member_m->get_single_member(array('memberID' => $memberID));
             $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'memberID' => $memberID]);
+            $test = 0;
+            foreach ($bookissue as $book){
+                print_r($book);
+            }
+            die;
             print_r(Count($bookissue));
             die;
             if (calculate($member)) {
