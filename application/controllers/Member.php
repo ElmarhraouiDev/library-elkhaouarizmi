@@ -217,14 +217,17 @@ class Member extends Admin_Controller
                 if( $book->status==0)
                    $test+=1;
             }
-            print_r($test);
-            die;
-            print_r(Count($bookissue));
-            die;
             if (calculate($member)) {
-                $this->member_m->update_member(['deleted_at' => 1], $memberID);
-                $this->session->set_flashdata('success', 'Success');
-                redirect(base_url('member/index'));
+                if($test == 0){
+                    $this->member_m->update_member(['deleted_at' => 1], $memberID);
+                    $this->session->set_flashdata('success', 'Success');
+                    redirect(base_url('member/index'));
+                }
+                else{
+                    $this->session->set_flashdata('error', ['book' => $test],);
+                    redirect(base_url('member/index'));
+                }
+
             } else {
                 $this->data["subview"] = "_not_found";
                 $this->load->view('_main_layout', $this->data);
