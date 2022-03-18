@@ -114,9 +114,24 @@ class Member extends Admin_Controller
         $class_group    = array('A', 'B','C', 'D');
 
         $memberID = htmlentities(escapeString($this->uri->segment(3)));
+        print_r($this->input->post('username'));
+        die;
         if ((int) $memberID) {
             $member = $this->member_m->get_single_member(array('memberID' => $memberID, 'deleted_at' => 0));
+            $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'memberID' => $memberID]);
+            $test1 = 0;
+            $test2 = 0; 
+            foreach ($bookissue as $book){
+                if( $book->status==0)
+                   $test1+=1;
+            }
+            if($member->username != $this->input->post('username'))
+            $test2 = 1;
             if (calculate($member)) {
+                if($test1 != 0 && $test2 != 0){
+                    $this->session->set_flashdata('error', "This account cannot be update username. It has ".$test1." borrowed books");
+                    redirect(base_url('member/index'));
+                }
                 $this->data['headerassets'] = array(
                     'css'      => array(
                         'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
