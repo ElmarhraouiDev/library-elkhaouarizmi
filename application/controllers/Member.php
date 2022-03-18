@@ -126,10 +126,6 @@ class Member extends Admin_Controller
             if($member->username != $this->input->post('username'))
             $test2 = 1;
             if (calculate($member)) {
-                if($test1 != 0 && $test2 != 0){
-                    $this->session->set_flashdata('error', "This account cannot be update username. It has ".$test1." borrowed books");
-                    redirect(base_url('member/index'));
-                }
                 $this->data['headerassets'] = array(
                     'css'      => array(
                         'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
@@ -176,10 +172,16 @@ class Member extends Admin_Controller
                         $array['modify_date']     = date('Y-m-d H:i:s');
                         $array['modify_memberID'] = $this->session->userdata('loginmemberID');
                         $array['modify_roleID']   = $this->session->userdata('roleID');
-
-                        $this->member_m->update_member($array, $memberID);
-                        $this->session->set_flashdata('success', 'Success');
-                        redirect(base_url('member/index'));
+                        
+                        if($test1 != 0 && $test2 != 0){
+                            $this->session->set_flashdata('error', "This account cannot be update username. It has ".$test1." borrowed books");
+                            redirect(base_url('member/index'));
+                        }
+                        else{
+                            $this->member_m->update_member($array, $memberID);
+                            $this->session->set_flashdata('success', 'Success');
+                            redirect(base_url('member/index'));
+                        }
                     }
                 } else {
                     $this->data["subview"] = "member/edit";
