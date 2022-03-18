@@ -31,7 +31,7 @@
 							</div>
 							<div class="form-group <?=form_error('placeofbirth') ? 'has-error' : ''?>">
 							  	<label for="placeofbirth"><?=$this->lang->line('member_place_birth')?></label> 
-							  	<input name="placeofbirth" id="placeofbirth" cols="30" rows="5" class="form-control" placeholder="Enter placeofbirth"><?=set_value('placeofbirth', $member->placeofbirth)?>
+							  	<input name="placeofbirth" id="placeofbirth" cols="30" rows="5" class="form-control" placeholder="Enter placeofbirth"  value="<?=set_value('placeofbirth', $member->placeofbirth)?>" > 
 							  	<?=form_error('placeofbirth')?>
 							</div>
 							<div class="form-group <?=form_error('gender') ? 'has-error' : ''?>">
