@@ -123,7 +123,8 @@ class Book extends Admin_Controller
             if (calculate($book)) {
                 $test1 = 0;
                 $test2 = 0;
-                if ($this->input->post('quantity') != $book->quantity && $this->input->post('quantity') > $book->quantity)
+                // && $this->input->post('quantity')> $book->quantity
+                if ($this->input->post('quantity') != $book->quantity )
                     $test2 = 1;
                 $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'bookID' => $bookID]);
                 foreach ($bookissue as $book) {
@@ -202,6 +203,7 @@ class Book extends Admin_Controller
                         }
 
                         if ($test1 != 0 && $test2 != 0) {
+                            echo "test1=".$test1." test2=".$test2;
                             $this->session->set_flashdata('error', "This book cannot be update quantity. It has " . $test1 . " borrowed account");
                             redirect(base_url('book/index'));
                         } else {
