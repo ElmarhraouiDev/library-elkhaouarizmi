@@ -131,9 +131,7 @@ class Book extends Admin_Controller
                     if ($book->status == 0)
                         $test1 += 1;
                 }
-                print_r($test1." ".$test2);
-                
-                die;
+              
                 $this->data['headerassets'] = array(
                     'css'      => array(
                         'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
@@ -183,32 +181,30 @@ class Book extends Admin_Controller
                         $array['modify_roleID']   = $this->session->userdata('roleID');
 
                         $arrayBookID = array('bookID' => $bookID);
-
-                        $this->bookitem_m->delete_bookitem_by_bookID($arrayBookID);
-
-                        $bookitemArray = [];
-                        $bookno = 1;
-                        $booknovol = 1;
-
-                        for ($i = 1; $i <= $array['quantity'] * $array['volume']; $i++) {
-                            $booknovol = 1;
-                            for ($j = 1; $j <= $array['volume']; $j++) {
-                                $bookitemArray[$i]['bookID']     = $bookID;
-                                $bookitemArray[$i]['bookno']     = $bookno;
-                                $bookitemArray[$i]['booknovol']  = $booknovol;
-                                $bookitemArray[$i]['status']     = 0;
-                                $bookitemArray[$i]['deleted_at'] = 0;
-                                $booknovol++;
-                                $i++;
-                            }
-                            $bookno++;
-                            $i--;
-                        }
-
                         if ($test1 != 0 && $test2 != 0) {
                             $this->session->set_flashdata('error', "This book cannot be update quantity. It has " . $test1 . " borrowed account");
                             redirect(base_url('book/index'));
                         } else {
+                            $this->bookitem_m->delete_bookitem_by_bookID($arrayBookID);
+
+                            $bookitemArray = [];
+                            $bookno = 1;
+                            $booknovol = 1;
+    
+                            for ($i = 1; $i <= $array['quantity'] * $array['volume']; $i++) {
+                                $booknovol = 1;
+                                for ($j = 1; $j <= $array['volume']; $j++) {
+                                    $bookitemArray[$i]['bookID']     = $bookID;
+                                    $bookitemArray[$i]['bookno']     = $bookno;
+                                    $bookitemArray[$i]['booknovol']  = $booknovol;
+                                    $bookitemArray[$i]['status']     = 0;
+                                    $bookitemArray[$i]['deleted_at'] = 0;
+                                    $booknovol++;
+                                    $i++;
+                                }
+                                $bookno++;
+                                $i--;
+                            }
                             $this->bookitem_m->insert_bookitem_batch($bookitemArray);
                             $this->book_m->update_book($array, $bookID);
                             $this->session->set_flashdata('success', 'Success');
