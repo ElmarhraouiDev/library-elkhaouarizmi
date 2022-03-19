@@ -131,6 +131,9 @@ class Book extends Admin_Controller
                     if ($book->status == 0)
                         $test1 += 1;
                 }
+                print_r($test1." ".$test2);
+                
+                die;
                 $this->data['headerassets'] = array(
                     'css'      => array(
                         'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
@@ -203,7 +206,6 @@ class Book extends Admin_Controller
                         }
 
                         if ($test1 != 0 && $test2 != 0) {
-                            echo "test1=".$test1." test2=".$test2;
                             $this->session->set_flashdata('error', "This book cannot be update quantity. It has " . $test1 . " borrowed account");
                             redirect(base_url('book/index'));
                         } else {
