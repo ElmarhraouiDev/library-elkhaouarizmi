@@ -121,17 +121,7 @@ class Book extends Admin_Controller
         if ((int) $bookID) {
             $book = $this->book_m->get_single_book(array('bookID' => $bookID, 'deleted_at' => 0));
             if (calculate($book)) {
-                $test1 = 0;
-                $test2 = 0;
-                // && $this->input->post('quantity')> $book->quantity
-                if ($this->input->post('quantity') != $book->quantity )
-                    $test2 = 1;
-                $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'bookID' => $bookID]);
-                foreach ($bookissue as $book) {
-                    if ($book->status == 0)
-                        $test1 += 1;
-                }
-              
+
                 $this->data['headerassets'] = array(
                     'css'      => array(
                         'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
@@ -181,16 +171,28 @@ class Book extends Admin_Controller
                         $array['modify_roleID']   = $this->session->userdata('roleID');
 
                         $arrayBookID = array('bookID' => $bookID);
+
+                        $test1 = 0;
+                        $test2 = 0;
+                        // && $this->input->post('quantity')> $book->quantity
+                        if ($this->input->post('quantity') != $book->quantity)
+                            $test2 = 1;
+                        $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'bookID' => $bookID]);
+                        foreach ($bookissue as $book) {
+                            if ($book->status == 0)
+                                $test1 += 1;
+                        }
+        
+
                         if ($test1 != 0 && $test2 != 0) {
                             $this->session->set_flashdata('error', "This book cannot be update quantity. It has " . $test1 . " borrowed account");
                             redirect(base_url('book/index'));
                         } else {
                             $this->bookitem_m->delete_bookitem_by_bookID($arrayBookID);
-
                             $bookitemArray = [];
                             $bookno = 1;
                             $booknovol = 1;
-    
+
                             for ($i = 1; $i <= $array['quantity'] * $array['volume']; $i++) {
                                 $booknovol = 1;
                                 for ($j = 1; $j <= $array['volume']; $j++) {
