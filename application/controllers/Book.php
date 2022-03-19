@@ -202,8 +202,8 @@ class Book extends Admin_Controller
                         }
 
                         if ($test1 != 0 && $test2 != 0) {
-                            $this->session->set_flashdata('error', "This account cannot be update username. It has " . $test1 . " borrowed books");
-                            redirect(base_url('member/index'));
+                            $this->session->set_flashdata('error', "This book cannot be update quantity. It has " . $test1 . " borrowed account");
+                            redirect(base_url('book/index'));
                         } else {
                             $this->bookitem_m->insert_bookitem_batch($bookitemArray);
                             $this->book_m->update_book($array, $bookID);
