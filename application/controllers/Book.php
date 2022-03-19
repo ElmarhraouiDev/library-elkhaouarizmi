@@ -12,7 +12,7 @@ class Book extends Admin_Controller
         $this->load->model('rack_m');
         $this->load->model('booktype_m');
         $this->load->model('bookcategory_m');
-
+        $this->load->model('bookissue_m');
         $lang = $this->session->userdata('language');
         $this->lang->load('book', $lang);
     }
@@ -29,7 +29,7 @@ class Book extends Admin_Controller
                 'assets/plugins/datatables.net-bs/js/dataTables.bootstrap.min.js',
             ),
         );
-        $this->data['books']   = $this->book_m->get_order_by_book(['deleted_at'=> 0]);
+        $this->data['books']   = $this->book_m->get_order_by_book(['deleted_at' => 0]);
         $this->data["subview"] = "book/index";
         $this->load->view('_main_layout', $this->data);
     }
@@ -51,7 +51,7 @@ class Book extends Admin_Controller
         );
         $this->data['booktypes']     = $this->booktype_m->get_booktype();
         $this->data['racks']         = $this->rack_m->get_rack();
-        $this->data['bookcategorys'] = $this->bookcategory_m->get_order_by_bookcategory_orderby(array('status' => 1),null, 'level_in_catagory asc');
+        $this->data['bookcategorys'] = $this->bookcategory_m->get_order_by_bookcategory_orderby(array('status' => 1), null, 'level_in_catagory asc');
         if ($_POST) {
 
             $rules = $this->rules();
@@ -64,9 +64,9 @@ class Book extends Admin_Controller
                 $array['name']            = $this->input->post('name');
                 $array['booktypeID']      = $this->input->post('booktypeID');
                 $array['author']          = $this->input->post('author');
-                $array['bookcategoryID']  = ',' . implode(',', $this->input->post('bookcategoryID')). ',';
+                $array['bookcategoryID']  = ',' . implode(',', $this->input->post('bookcategoryID')) . ',';
                 $array['quantity']        = $this->input->post('quantity');
-                $array['volume']          = empty($this->input->post('volume'))? 1 : ($this->input->post('volume') == 0 ? 1 : $this->input->post('volume'));
+                $array['volume']          = empty($this->input->post('volume')) ? 1 : ($this->input->post('volume') == 0 ? 1 : $this->input->post('volume'));
                 $array['price']           = $this->input->post('price');
                 $array['codeno']          = $this->input->post('codeno');
                 $array['coverphoto']      = $this->upload_data['coverphoto']['file_name'];
@@ -121,6 +121,15 @@ class Book extends Admin_Controller
         if ((int) $bookID) {
             $book = $this->book_m->get_single_book(array('bookID' => $bookID, 'deleted_at' => 0));
             if (calculate($book)) {
+                $test1 = 0;
+                $test2 = 0;
+                if ($this->input->post('quantity') != $book->quantity && $this->input->post('quantity') > $book->quantity)
+                    $test2 = 1;
+                $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'bookID' => $bookID]);
+                foreach ($bookissue as $book) {
+                    if ($book->status == 0)
+                        $test1 += 1;
+                }
                 $this->data['headerassets'] = array(
                     'css'      => array(
                         'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
@@ -140,7 +149,7 @@ class Book extends Admin_Controller
                 $this->data['book']          = $book;
                 $this->data['booktypes']     = $this->booktype_m->get_booktype();
                 $this->data['racks']         = $this->rack_m->get_rack();
-                $this->data['bookcategorys'] = $this->bookcategory_m->get_order_by_bookcategory_orderby(array('status' => 1),null, 'level_in_catagory asc');
+                $this->data['bookcategorys'] = $this->bookcategory_m->get_order_by_bookcategory_orderby(array('status' => 1), null, 'level_in_catagory asc');
                 if ($_POST) {
                     $rules = $this->rules();
                     $this->form_validation->set_rules($rules);
@@ -148,54 +157,58 @@ class Book extends Admin_Controller
                         $this->data["subview"] = "book/edit";
                         $this->load->view('_main_layout', $this->data);
                     } else {
-                        $array                    = [];
-                        $array['name']            = $this->input->post('name');                
-                        $array['booktypeID']      = $this->input->post('booktypeID');        
-                        $array['author']          = $this->input->post('author');
-                        $array['bookcategoryID']  = ',' . implode(',', $this->input->post('bookcategoryID')). ',';
-                        $array['quantity']        = $this->input->post('quantity');
-                        $array['volume']          = empty($this->input->post('volume'))? 1 : ($this->input->post('volume') == 0 ? 1 : $this->input->post('volume'));
-                        $array['price']           = $this->input->post('price');
-                        $array['codeno']          = $this->input->post('codeno');
-                        $array['coverphoto']      = $this->upload_data['coverphoto']['file_name'];
-                        $array['isbnno']          = $this->input->post('isbnno');
-                        $array['rackID']          = ($this->input->post('rackID')) ? $this->input->post('rackID') : null;
-                        $array['editionnumber']   = $this->input->post('editionnumber');
-                        $array['editiondate']     = (($this->input->post('editiondate')) ? date('Y-m-d', strtotime($this->input->post('editiondate'))) : null);
-                        $array['publisher']       = $this->input->post('publisher');
-                        $array['publisheddate']   = (($this->input->post('publisheddate')) ? date('Y-m-d', strtotime($this->input->post('publisheddate'))) : null);
-                        $array['notes']           = $this->input->post('notes');
-                        $array['modify_date']     = date('Y-m-d H:i:s');
-                        $array['modify_memberID'] = $this->session->userdata('loginmemberID');
-                        $array['modify_roleID']   = $this->session->userdata('roleID');
+                        if ($test1 != 0 && $test2 != 0) {
+                            $this->session->set_flashdata('error', "This account cannot be update username. It has " . $test1 . " borrowed books");
+                            redirect(base_url('member/index'));
+                        } else {
+                            $array                    = [];
+                            $array['name']            = $this->input->post('name');
+                            $array['booktypeID']      = $this->input->post('booktypeID');
+                            $array['author']          = $this->input->post('author');
+                            $array['bookcategoryID']  = ',' . implode(',', $this->input->post('bookcategoryID')) . ',';
+                            $array['quantity']        = $this->input->post('quantity');
+                            $array['volume']          = empty($this->input->post('volume')) ? 1 : ($this->input->post('volume') == 0 ? 1 : $this->input->post('volume'));
+                            $array['price']           = $this->input->post('price');
+                            $array['codeno']          = $this->input->post('codeno');
+                            $array['coverphoto']      = $this->upload_data['coverphoto']['file_name'];
+                            $array['isbnno']          = $this->input->post('isbnno');
+                            $array['rackID']          = ($this->input->post('rackID')) ? $this->input->post('rackID') : null;
+                            $array['editionnumber']   = $this->input->post('editionnumber');
+                            $array['editiondate']     = (($this->input->post('editiondate')) ? date('Y-m-d', strtotime($this->input->post('editiondate'))) : null);
+                            $array['publisher']       = $this->input->post('publisher');
+                            $array['publisheddate']   = (($this->input->post('publisheddate')) ? date('Y-m-d', strtotime($this->input->post('publisheddate'))) : null);
+                            $array['notes']           = $this->input->post('notes');
+                            $array['modify_date']     = date('Y-m-d H:i:s');
+                            $array['modify_memberID'] = $this->session->userdata('loginmemberID');
+                            $array['modify_roleID']   = $this->session->userdata('roleID');
 
-                        $arrayBookID = array('bookID' => $bookID);
+                            $arrayBookID = array('bookID' => $bookID);
 
-                        $this->bookitem_m->delete_bookitem_by_bookID($arrayBookID);
+                            $this->bookitem_m->delete_bookitem_by_bookID($arrayBookID);
 
-                        $bookitemArray = [];
-                        $bookno = 1;
-                        $booknovol = 1;
-
-                        for ($i = 1; $i <= $array['quantity'] * $array['volume']; $i++) {
+                            $bookitemArray = [];
+                            $bookno = 1;
                             $booknovol = 1;
-                            for ($j = 1; $j <= $array['volume']; $j++) {
-                                $bookitemArray[$i]['bookID']     = $bookID;
-                                $bookitemArray[$i]['bookno']     = $bookno;
-                                $bookitemArray[$i]['booknovol']  = $booknovol;
-                                $bookitemArray[$i]['status']     = 0;
-                                $bookitemArray[$i]['deleted_at'] = 0;
-                                $booknovol++;
-                                $i++;
-                            }
-                            $bookno++;
-                            $i--;
-                        }
-                        $this->bookitem_m->insert_bookitem_batch($bookitemArray);
 
-                        $this->book_m->update_book($array, $bookID);
-                        $this->session->set_flashdata('success', 'Success');
-                        redirect(base_url('book/index'));
+                            for ($i = 1; $i <= $array['quantity'] * $array['volume']; $i++) {
+                                $booknovol = 1;
+                                for ($j = 1; $j <= $array['volume']; $j++) {
+                                    $bookitemArray[$i]['bookID']     = $bookID;
+                                    $bookitemArray[$i]['bookno']     = $bookno;
+                                    $bookitemArray[$i]['booknovol']  = $booknovol;
+                                    $bookitemArray[$i]['status']     = 0;
+                                    $bookitemArray[$i]['deleted_at'] = 0;
+                                    $booknovol++;
+                                    $i++;
+                                }
+                                $bookno++;
+                                $i--;
+                            }
+                            $this->bookitem_m->insert_bookitem_batch($bookitemArray);
+                            $this->book_m->update_book($array, $bookID);
+                            $this->session->set_flashdata('success', 'Success');
+                            redirect(base_url('book/index'));
+                        }
                     }
                 } else {
                     $this->data["subview"] = "book/edit";
@@ -273,23 +286,22 @@ class Book extends Admin_Controller
 
     public function import()
     {
-        if ($this->input->post('submit')) 
-        {        
-            $inserdata = [];   
+        if ($this->input->post('submit')) {
+            $inserdata = [];
             $path = 'uploads/';
             require_once APPPATH . "/third_party/PHPExcel.php";
             $config['upload_path'] = $path;
             $config['allowed_types'] = 'xlsx|xls|csv';
             $config['remove_spaces'] = TRUE;
             $this->load->library('upload', $config);
-            $this->upload->initialize($config);        
+            $this->upload->initialize($config);
 
             if (!$this->upload->do_upload('fileupload')) {
                 $error = array('error' => $this->upload->display_errors());
             } else {
                 $data = array('upload_data' => $this->upload->data());
             }
-            if(empty($error)){
+            if (empty($error)) {
                 // if (!empty($data['upload_data']['file_name'])) {
                 // } else {
                 //     $import_xls_file = 0;
@@ -298,27 +310,27 @@ class Book extends Admin_Controller
                 $import_xls_file = $data['upload_data']['file_name'];
 
                 $inputFileName = $path . $import_xls_file;
-                
+
                 try {
                     $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
                     $objReader = PHPExcel_IOFactory::createReader($inputFileType);
                     $objPHPExcel = $objReader->load($inputFileName);
                     $allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
                     $flag = true; // Header in Xls
-                    $i=0;
+                    $i = 0;
 
                     $bookCodes_count = count($allDataInSheet) - 1;
                     $bookCodes_error_count = 0;
 
                     foreach ($allDataInSheet as $value) {
-                        if($flag){
-                            $flag =false;
+                        if ($flag) {
+                            $flag = false;
                             continue;
                         }
-                        
+
                         $book = $this->book_m->get_single_book(array('codeno' => $value['I'], 'deleted_at !=' => 1));
 
-                        if (empty($value['I']) || calculate($book )) {
+                        if (empty($value['I']) || calculate($book)) {
                             echo '0';
                             $bookCodes_error_count++;
                             continue;
@@ -368,7 +380,7 @@ class Book extends Admin_Controller
 
                         $inserdata[$i]['name']              = $value['A'];
                         $inserdata[$i]['author']            = $value['B'];
-                        $inserdata[$i]['bookcategoryID']    = ','. $value['C']. ',';
+                        $inserdata[$i]['bookcategoryID']    = ',' . $value['C'] . ',';
                         $inserdata[$i]['quantity']          = $value['D'];
                         $inserdata[$i]['volume']            = empty($value['E']) ? 1 : ($value['E'] == 0 ? 1 : $value['E']);
                         $inserdata[$i]['price']             = $value['F'];
@@ -386,58 +398,57 @@ class Book extends Admin_Controller
                         $inserdata[$i]['deleted_at']        = 0;
                         $inserdata[$i]['create_date']       = date('Y-m-d H:i:s');
                         $i++;
-                    } 
+                    }
 
-                $result = $this->book_m->import_book_batch($inserdata);
-                
-                // print_r($result);
-                // return;
+                    $result = $this->book_m->import_book_batch($inserdata);
 
-                if ($result[1] >= 1) {
-                    for($b = $result[0]; $b < $result[0] + $result[1]; $b++) {
-                        $book = $this->book_m->get_single_book(array('bookID' => $b));
-                        $bookID     = $book->bookID;
-                        $quantity   = $book->quantity;
-                        $volume     = $book->volume;
-                        $bookitemArray = [];
-                        $bookno = 1;
-                        $booknovol = 1;
-    
-                        for ($i = 1; $i <= $quantity * $volume; $i++) {
+                    // print_r($result);
+                    // return;
+
+                    if ($result[1] >= 1) {
+                        for ($b = $result[0]; $b < $result[0] + $result[1]; $b++) {
+                            $book = $this->book_m->get_single_book(array('bookID' => $b));
+                            $bookID     = $book->bookID;
+                            $quantity   = $book->quantity;
+                            $volume     = $book->volume;
+                            $bookitemArray = [];
+                            $bookno = 1;
                             $booknovol = 1;
-                            for ($j = 1; $j <= $volume; $j++) {
-                                $bookitemArray[$i]['bookID']     = $bookID;
-                                $bookitemArray[$i]['bookno']     = $bookno;
-                                $bookitemArray[$i]['booknovol']  = $booknovol;
-                                $bookitemArray[$i]['status']     = 0;
-                                $bookitemArray[$i]['deleted_at'] = 0;
-                                $booknovol++;
-                                $i++;
+
+                            for ($i = 1; $i <= $quantity * $volume; $i++) {
+                                $booknovol = 1;
+                                for ($j = 1; $j <= $volume; $j++) {
+                                    $bookitemArray[$i]['bookID']     = $bookID;
+                                    $bookitemArray[$i]['bookno']     = $bookno;
+                                    $bookitemArray[$i]['booknovol']  = $booknovol;
+                                    $bookitemArray[$i]['status']     = 0;
+                                    $bookitemArray[$i]['deleted_at'] = 0;
+                                    $booknovol++;
+                                    $i++;
+                                }
+                                $bookno++;
+                                $i--;
                             }
-                            $bookno++;
-                            $i--;
+
+                            $this->bookitem_m->insert_bookitem_batch($bookitemArray);
                         }
-                        
-                        $this->bookitem_m->insert_bookitem_batch($bookitemArray);
-                    }                
-                }
+                    }
 
-                if($result){
+                    if ($result) {
 
-                    $books_success = $bookCodes_count - $bookCodes_error_count;
+                        $books_success = $bookCodes_count - $bookCodes_error_count;
 
-                    $this->session->set_flashdata('success', $books_success.'/'.$bookCodes_count.' Books Success');
+                        $this->session->set_flashdata('success', $books_success . '/' . $bookCodes_count . ' Books Success');
 
-                    redirect('/book', '');
-                }            
-                
+                        redirect('/book', '');
+                    }
                 } catch (Exception $e) {
                     die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
-                . '": ' .$e->getMessage());
+                        . '": ' . $e->getMessage());
                 }
-            }else{
-                 $error['error'];
-                 $this->session->set_flashdata('error', $error['error']);
+            } else {
+                $error['error'];
+                $this->session->set_flashdata('error', $error['error']);
             }
             redirect('/book', '');
         }
@@ -579,17 +590,16 @@ class Book extends Admin_Controller
     function check_default()
     {
         $choice = $this->input->post("bookcategoryID");
-        if(empty($choice))
-        {
+        if (empty($choice)) {
             $choice = array();
         }
         $bookcategoryID = implode(',', $choice);
 
-        if($bookcategoryID != '')
+        if ($bookcategoryID != '')
             return true;
         else {
             $this->form_validation->set_message("check_default", "The %s field is required.");
-            return false;   
+            return false;
         }
     }
 
@@ -614,5 +624,4 @@ class Book extends Admin_Controller
             return true;
         }
     }
-
 }
