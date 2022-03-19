@@ -157,53 +157,54 @@ class Book extends Admin_Controller
                         $this->data["subview"] = "book/edit";
                         $this->load->view('_main_layout', $this->data);
                     } else {
+                        $array                    = [];
+                        $array['name']            = $this->input->post('name');
+                        $array['booktypeID']      = $this->input->post('booktypeID');
+                        $array['author']          = $this->input->post('author');
+                        $array['bookcategoryID']  = ',' . implode(',', $this->input->post('bookcategoryID')) . ',';
+                        $array['quantity']        = $this->input->post('quantity');
+                        $array['volume']          = empty($this->input->post('volume')) ? 1 : ($this->input->post('volume') == 0 ? 1 : $this->input->post('volume'));
+                        $array['price']           = $this->input->post('price');
+                        $array['codeno']          = $this->input->post('codeno');
+                        $array['coverphoto']      = $this->upload_data['coverphoto']['file_name'];
+                        $array['isbnno']          = $this->input->post('isbnno');
+                        $array['rackID']          = ($this->input->post('rackID')) ? $this->input->post('rackID') : null;
+                        $array['editionnumber']   = $this->input->post('editionnumber');
+                        $array['editiondate']     = (($this->input->post('editiondate')) ? date('Y-m-d', strtotime($this->input->post('editiondate'))) : null);
+                        $array['publisher']       = $this->input->post('publisher');
+                        $array['publisheddate']   = (($this->input->post('publisheddate')) ? date('Y-m-d', strtotime($this->input->post('publisheddate'))) : null);
+                        $array['notes']           = $this->input->post('notes');
+                        $array['modify_date']     = date('Y-m-d H:i:s');
+                        $array['modify_memberID'] = $this->session->userdata('loginmemberID');
+                        $array['modify_roleID']   = $this->session->userdata('roleID');
+
+                        $arrayBookID = array('bookID' => $bookID);
+
+                        $this->bookitem_m->delete_bookitem_by_bookID($arrayBookID);
+
+                        $bookitemArray = [];
+                        $bookno = 1;
+                        $booknovol = 1;
+
+                        for ($i = 1; $i <= $array['quantity'] * $array['volume']; $i++) {
+                            $booknovol = 1;
+                            for ($j = 1; $j <= $array['volume']; $j++) {
+                                $bookitemArray[$i]['bookID']     = $bookID;
+                                $bookitemArray[$i]['bookno']     = $bookno;
+                                $bookitemArray[$i]['booknovol']  = $booknovol;
+                                $bookitemArray[$i]['status']     = 0;
+                                $bookitemArray[$i]['deleted_at'] = 0;
+                                $booknovol++;
+                                $i++;
+                            }
+                            $bookno++;
+                            $i--;
+                        }
+
                         if ($test1 != 0 && $test2 != 0) {
                             $this->session->set_flashdata('error', "This account cannot be update username. It has " . $test1 . " borrowed books");
                             redirect(base_url('member/index'));
                         } else {
-                            $array                    = [];
-                            $array['name']            = $this->input->post('name');
-                            $array['booktypeID']      = $this->input->post('booktypeID');
-                            $array['author']          = $this->input->post('author');
-                            $array['bookcategoryID']  = ',' . implode(',', $this->input->post('bookcategoryID')) . ',';
-                            $array['quantity']        = $this->input->post('quantity');
-                            $array['volume']          = empty($this->input->post('volume')) ? 1 : ($this->input->post('volume') == 0 ? 1 : $this->input->post('volume'));
-                            $array['price']           = $this->input->post('price');
-                            $array['codeno']          = $this->input->post('codeno');
-                            $array['coverphoto']      = $this->upload_data['coverphoto']['file_name'];
-                            $array['isbnno']          = $this->input->post('isbnno');
-                            $array['rackID']          = ($this->input->post('rackID')) ? $this->input->post('rackID') : null;
-                            $array['editionnumber']   = $this->input->post('editionnumber');
-                            $array['editiondate']     = (($this->input->post('editiondate')) ? date('Y-m-d', strtotime($this->input->post('editiondate'))) : null);
-                            $array['publisher']       = $this->input->post('publisher');
-                            $array['publisheddate']   = (($this->input->post('publisheddate')) ? date('Y-m-d', strtotime($this->input->post('publisheddate'))) : null);
-                            $array['notes']           = $this->input->post('notes');
-                            $array['modify_date']     = date('Y-m-d H:i:s');
-                            $array['modify_memberID'] = $this->session->userdata('loginmemberID');
-                            $array['modify_roleID']   = $this->session->userdata('roleID');
-
-                            $arrayBookID = array('bookID' => $bookID);
-
-                            $this->bookitem_m->delete_bookitem_by_bookID($arrayBookID);
-
-                            $bookitemArray = [];
-                            $bookno = 1;
-                            $booknovol = 1;
-
-                            for ($i = 1; $i <= $array['quantity'] * $array['volume']; $i++) {
-                                $booknovol = 1;
-                                for ($j = 1; $j <= $array['volume']; $j++) {
-                                    $bookitemArray[$i]['bookID']     = $bookID;
-                                    $bookitemArray[$i]['bookno']     = $bookno;
-                                    $bookitemArray[$i]['booknovol']  = $booknovol;
-                                    $bookitemArray[$i]['status']     = 0;
-                                    $bookitemArray[$i]['deleted_at'] = 0;
-                                    $booknovol++;
-                                    $i++;
-                                }
-                                $bookno++;
-                                $i--;
-                            }
                             $this->bookitem_m->insert_bookitem_batch($bookitemArray);
                             $this->book_m->update_book($array, $bookID);
                             $this->session->set_flashdata('success', 'Success');
