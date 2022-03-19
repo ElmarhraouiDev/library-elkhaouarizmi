@@ -149,6 +149,15 @@ class Book extends Admin_Controller
                         $this->data["subview"] = "book/edit";
                         $this->load->view('_main_layout', $this->data);
                     } else {
+                        $test1 = 0;
+                        $test2 = 0;
+                        if ($this->input->post('quantity') != $book->quantity && intval($this->input->post('quantity')) < intval($book->quantity))
+                            $test2 = 1;
+                        $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'bookID' => $bookID]);
+                        foreach ($bookissue as $book) {
+                            if ($book->status == 0)
+                                $test1 += 1;
+                        }
                         $array                    = [];
                         $array['name']            = $this->input->post('name');
                         $array['booktypeID']      = $this->input->post('booktypeID');
@@ -171,16 +180,6 @@ class Book extends Admin_Controller
                         $array['modify_roleID']   = $this->session->userdata('roleID');
 
                         $arrayBookID = array('bookID' => $bookID);
-
-                        $test1 = 0;
-                        $test2 = 0;
-                        if ($this->input->post('quantity') != $book->quantity && intval($this->input->post('quantity')) > intval($book->quantity))
-                            $test2 = 1;
-                        $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'bookID' => $bookID]);
-                        foreach ($bookissue as $book) {
-                            if ($book->status == 0)
-                                $test1 += 1;
-                        }
                         if ($test1 != 0 && $test2 != 0) {
                             $this->session->set_flashdata('error', "This book cannot be update quantity. It has " . $test1 . " borrowed account");
                             redirect(base_url('book/index'));
