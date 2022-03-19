@@ -174,8 +174,7 @@ class Book extends Admin_Controller
 
                         $test1 = 0;
                         $test2 = 0;
-                        // && $this->input->post('quantity')> $book->quantity
-                        if ($this->input->post('quantity') != $book->quantity)
+                        if ($this->input->post('quantity') != $book->quantity && $this->input->post('quantity')> $book->quantity)
                             $test2 = 1;
                         $bookissue = $this->bookissue_m->get_order_by_bookissue(['deleted_at' => 0, 'bookID' => $bookID]);
                         foreach ($bookissue as $book) {
