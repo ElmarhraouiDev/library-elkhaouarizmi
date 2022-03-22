@@ -158,6 +158,7 @@ class Bookissue extends Admin_Controller
 
     public function addfast()
     {
+        print("ok1");
         if ($_POST) {
 
             $memberID   = $this->input->post('memberID');
@@ -299,103 +300,104 @@ class Bookissue extends Admin_Controller
         }
     }
 
-    // public function add()
-    // {
-    //     $this->data['headerassets'] = array(
-    //         'css'      => array(
-    //             'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
-    //         ),
-    //         'headerjs' => array(
-    //             'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
-    //         ),
-    //         'js'       => array(
-    //             'assets/custom/js/bookissue.js',
-    //         ),
-    //     );
+    public function add()
+    {
+        print("ok2");
+        $this->data['headerassets'] = array(
+            'css'      => array(
+                'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+            ),
+            'headerjs' => array(
+                'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+            ),
+            'js'       => array(
+                'assets/custom/js/bookissue.js',
+            ),
+        );
 
-    //     $this->data['members'] = $this->member_m->get_order_by_member(['status' => 1, 'deleted_at' => 0], array('memberID', 'name'));
-    //     $this->data['books']   = $this->book_m->get_order_by_book(array('status' => 0, 'deleted_at' => 0));
+        $this->data['members'] = $this->member_m->get_order_by_member(['status' => 1, 'deleted_at' => 0], array('memberID', 'name'));
+        $this->data['books']   = $this->book_m->get_order_by_book(array('status' => 0, 'deleted_at' => 0));
 
-    //     $this->data['bookitems'] = [];
-    //     $bookID                  = $this->input->post('bookID');
-    //     if ((int) $bookID) {
-    //         $this->data['bookitems'] = $this->bookitem_m->get_order_by_bookitem(array('bookID' => $bookID, 'status' => 0, 'deleted_at' => 0), array('bookno'));
-    //     }
+        $this->data['bookitems'] = [];
+        $bookID                  = $this->input->post('bookID');
+        if ((int) $bookID) {
+            $this->data['bookitems'] = $this->bookitem_m->get_order_by_bookitem(array('bookID' => $bookID, 'status' => 0, 'deleted_at' => 0), array('bookno'));
+        }
 
-    //     if ($_POST) {
-    //         $rules = $this->rules();
-    //         $this->form_validation->set_rules($rules);
-    //         if ($this->form_validation->run() == false) {
-    //             $this->data["subview"] = "bookissue/add";
-    //             $this->load->view('_main_layout', $this->data);
-    //         } else {
-    //             $memberID = $this->input->post('memberID');
-    //             $member   = $this->member_m->get_single_member(['memberID' => $memberID]);
-    //             $book     = $this->book_m->get_single_book(['bookID' => $bookID]);
+        if ($_POST) {
+            $rules = $this->rules();
+            $this->form_validation->set_rules($rules);
+            if ($this->form_validation->run() == false) {
+                $this->data["subview"] = "bookissue/add";
+                $this->load->view('_main_layout', $this->data);
+            } else {
+                $memberID = $this->input->post('memberID');
+                $member   = $this->member_m->get_single_member(['memberID' => $memberID]);
+                $book     = $this->book_m->get_single_book(['bookID' => $bookID]);
 
-    //             $roleID           = $member->roleID;
-    //             $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID));
-    //             if (!calculate($libraryconfigure)) {
-    //                 $libraryconfigure = (object) $this->libraryconfigure_m->libraryconfigure;
-    //             }
+                $roleID           = $member->roleID;
+                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID));
+                if (!calculate($libraryconfigure)) {
+                    $libraryconfigure = (object) $this->libraryconfigure_m->libraryconfigure;
+                }
 
-    //             $issue_date = $this->input->post('issue_date');
+                $issue_date = $this->input->post('issue_date');
 
-    //             $array['roleID']            = $member->roleID;
-    //             $array['memberID']          = $memberID;
-    //             $array['bookcategoryID']    = $book->bookcategoryID;
-    //             $array['bookID']            = $this->input->post('bookID');
-    //             $array['bookno']            = $this->input->post('bookno');
-    //             $array['notes']             = $this->input->post('notes');
-    //             $array['issue_date']        = date('Y-m-d', strtotime($issue_date));
-    //             $array['expire_date']       = date('Y-m-d', strtotime($issue_date . "+ $libraryconfigure->per_renew_limit_day days"));
-    //             $array['renewed']           = 1;
-    //             $array['max_renewed_limit'] = $libraryconfigure->max_renewed_limit;
-    //             $array['book_fine_per_day'] = $libraryconfigure->book_fine_per_day;
-    //             $array['fineamount']        = 0;
-    //             $array['status']            = 0;
-    //             $array['deleted_at']        = 0;
-    //             $array['create_date']       = date('Y-m-d H:i:s');
-    //             $array['create_memberID']   = $this->session->userdata('loginmemberID');
-    //             $array['create_roleID']     = $this->session->userdata('roleID');
-    //             $array['modify_date']       = date('Y-m-d H:i:s');
-    //             $array['modify_memberID']   = $this->session->userdata('loginmemberID');
-    //             $array['modify_roleID']     = $this->session->userdata('roleID');
-    //             $bookissueID                = $this->bookissue_m->insert_bookissue($array);
+                $array['roleID']            = $member->roleID;
+                $array['memberID']          = $memberID;
+                $array['bookcategoryID']    = $book->bookcategoryID;
+                $array['bookID']            = $this->input->post('bookID');
+                $array['bookno']            = $this->input->post('bookno');
+                $array['notes']             = $this->input->post('notes');
+                $array['issue_date']        = date('Y-m-d', strtotime($issue_date));
+                $array['expire_date']       = date('Y-m-d', strtotime($issue_date . "+ $libraryconfigure->per_renew_limit_day days"));
+                $array['renewed']           = 1;
+                $array['max_renewed_limit'] = $libraryconfigure->max_renewed_limit;
+                $array['book_fine_per_day'] = $libraryconfigure->book_fine_per_day;
+                $array['fineamount']        = 0;
+                $array['status']            = 0;
+                $array['deleted_at']        = 0;
+                $array['create_date']       = date('Y-m-d H:i:s');
+                $array['create_memberID']   = $this->session->userdata('loginmemberID');
+                $array['create_roleID']     = $this->session->userdata('roleID');
+                $array['modify_date']       = date('Y-m-d H:i:s');
+                $array['modify_memberID']   = $this->session->userdata('loginmemberID');
+                $array['modify_roleID']     = $this->session->userdata('roleID');
+                $bookissueID                = $this->bookissue_m->insert_bookissue($array);
 
-    //             $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $array['bookID'], 'bookno' => $array['bookno'], 'status' => 0, 'deleted_at' => 0]);
-    //             if (calculate($bookitem)) {
-    //                 $this->bookitem_m->update_bookitem(['status' => 1], $bookitem->bookitemID);
-    //             }
-    //             $bookitem = $this->bookitem_m->get_order_by_bookitem(['bookID' => $array['bookID'], 'status' => 0, 'deleted_at' => 0]);
-    //             if (!calculate($bookitem)) {
-    //                 $this->book_m->update_book(['status' => 1], $array['bookID']);
-    //             }
+                $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $array['bookID'], 'bookno' => $array['bookno'], 'status' => 0, 'deleted_at' => 0]);
+                if (calculate($bookitem)) {
+                    $this->bookitem_m->update_bookitem(['status' => 1], $bookitem->bookitemID);
+                }
+                $bookitem = $this->bookitem_m->get_order_by_bookitem(['bookID' => $array['bookID'], 'status' => 0, 'deleted_at' => 0]);
+                if (!calculate($bookitem)) {
+                    $this->book_m->update_book(['status' => 1], $array['bookID']);
+                }
 
-    //             $fineArray                    = [];
-    //             $fineArray['bookissueID']     = $bookissueID;
-    //             $fineArray['bookstatusID']    = 0;
-    //             $fineArray['renewed']         = 1;
-    //             $fineArray['from_date']       = null;
-    //             $fineArray['to_date']         = null;
-    //             $fineArray['fineamount']      = 0;
-    //             $fineArray['notes']           = null;
-    //             $fineArray['create_date']     = date('Y-m-d H:i:s');
-    //             $fineArray['create_memberID'] = $this->session->userdata('loginmemberID');
-    //             $fineArray['create_roleID']   = $this->session->userdata('roleID');
-    //             $fineArray['modify_date']     = date('Y-m-d H:i:s');
-    //             $fineArray['modify_memberID'] = $this->session->userdata('loginmemberID');
-    //             $fineArray['modify_roleID']   = $this->session->userdata('roleID');
-    //             $this->finehistory_m->insert_finehistory($fineArray);
+                $fineArray                    = [];
+                $fineArray['bookissueID']     = $bookissueID;
+                $fineArray['bookstatusID']    = 0;
+                $fineArray['renewed']         = 1;
+                $fineArray['from_date']       = null;
+                $fineArray['to_date']         = null;
+                $fineArray['fineamount']      = 0;
+                $fineArray['notes']           = null;
+                $fineArray['create_date']     = date('Y-m-d H:i:s');
+                $fineArray['create_memberID'] = $this->session->userdata('loginmemberID');
+                $fineArray['create_roleID']   = $this->session->userdata('roleID');
+                $fineArray['modify_date']     = date('Y-m-d H:i:s');
+                $fineArray['modify_memberID'] = $this->session->userdata('loginmemberID');
+                $fineArray['modify_roleID']   = $this->session->userdata('roleID');
+                $this->finehistory_m->insert_finehistory($fineArray);
 
-    //             $this->session->set_flashdata('success', 'Success');
-    //             redirect(base_url('bookissue/index'));
-    //         }
-    //     } else {
-    //         $this->data["subview"] = "bookissue/add";
-    //         $this->load->view('_main_layout', $this->data);
-    //     }
-    // }
+                $this->session->set_flashdata('success', 'Success');
+                redirect(base_url('bookissue/index'));
+            }
+        } else {
+            $this->data["subview"] = "bookissue/add";
+            $this->load->view('_main_layout', $this->data);
+        }
+    }
 
     public function edit()
     {
