@@ -108,6 +108,8 @@ class Bookissue extends Admin_Controller
 
     public function getmember()
     {
+        // ayoub
+        
         $data['success'] = 0;
         $data['books'] = [];
         // $data['book']= [];
@@ -307,6 +309,7 @@ class Bookissue extends Admin_Controller
 
     public function add()
     {
+        print_r("ok");
         $this->data['headerassets'] = array(
             'css'      => array(
                 'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
