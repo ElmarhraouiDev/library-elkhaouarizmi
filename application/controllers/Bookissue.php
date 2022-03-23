@@ -121,7 +121,7 @@ class Bookissue extends Admin_Controller
                 foreach ($books_ as $rackID){
                     $data_[] = $rackID->codeno;
                 }    
-                $data['books'] = $data_;           
+                        
                 // $this->data['member']       = $member;
                 // $this->data['bookcategory'] = pluck($this->bookcategory_m->get_bookcategory(), 'name', 'bookcategoryID');
                 // $this->data['book']         = pluck($this->book_m->get_book(), 'name', 'bookID');
@@ -150,6 +150,7 @@ class Bookissue extends Admin_Controller
                     }
                 }
                 $data['books'] = $books;
+                $data['books'] = $data_;   
                 die(json_encode($data));
             } else {
                 $data['success'] = 1;
