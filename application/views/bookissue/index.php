@@ -269,7 +269,7 @@
                         $("#btn_addissue").show();
                         $("#issue_booksID").focus();
                         books_ids = response['books'];
-                        console.log(books_ids)
+                        console.log(response)
                     } else {
                         $("#issue_memberID").prop('disabled', false);
                         $("#issue_memberID").focus();
@@ -304,8 +304,6 @@
             console.log(books_ids_seletions);
             console.log(books_ids_seletions_filter);
             console.log(books_ids_filter);
-            
-            
             if (true) {
                 books_ids_seletions.push(value);
                 valuechanged = value.replace("/", "_");
