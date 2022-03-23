@@ -112,9 +112,9 @@ class Bookissue extends Admin_Controller
         $data['books'] = [];
 
         $books = array();
-        print_r('ok');
         $memberCode = htmlentities(escapeString($this->uri->segment(3)));
         if ((int) $memberCode) {
+            print_r("ok1");
             $member = $this->member_m->get_single_member(array('code' => $memberCode));
             if (calculate($member)) {
                 // $this->data['member']       = $member;
@@ -147,6 +147,7 @@ class Bookissue extends Admin_Controller
                 $data['books'] = $books;
                 die(json_encode($data));
             } else {
+                print_r("ok2");
                 $data['success'] = 1;
                 die(json_encode($data));
             }
