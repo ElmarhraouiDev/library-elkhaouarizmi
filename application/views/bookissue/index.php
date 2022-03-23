@@ -300,6 +300,8 @@
         if (e.key === 'Enter' || e.keyCode === 13) {
             var value = $(this).val();
             //  books_ids.includes(value) && !books_ids_seletions.includes(value)
+            console.log(books_ids);
+            console.log(books_ids_seletions);
             if (true) {
                 books_ids_seletions.push(value);
                 valuechanged = value.replace("/", "_");
