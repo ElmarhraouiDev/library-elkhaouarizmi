@@ -118,9 +118,8 @@ class Bookissue extends Admin_Controller
             $member = $this->member_m->get_single_member(array('code' => $memberCode));
             if (calculate($member)) {
                 $books_ = $this->book_m->get_book();
-                print_r($books_);
                 foreach ($books_ as $rackID){
-                    $data_[] = $rackID;
+                    $data_[] = $rackID->codeno;
                 }    
                 $data['book'] = $data_;           
                 // $this->data['member']       = $member;
