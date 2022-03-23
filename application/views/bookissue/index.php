@@ -301,9 +301,9 @@
             var value = $(this).val();
             console.log(books_ids);
             console.log(books_ids_seletions);
-            console.log(books_ids_seletions_filter);
-            console.log(books_ids_filter);
-            if (books_ids.includes(value) && !books_ids_seletions.includes(value)) {
+            let test1 = books_ids.filter(item => item.includes(value));
+            let test2 = books_ids_seletions.filter(item => item.includes(value));
+            if (test1.length && !test2.length ) {
                 books_ids_seletions.push(value);
                 valuechanged = value.replace("/", "_");
                 $("#container_ids").append("<span onclick=remove_id('"+value+"') class='label label-primary btncode "+valuechanged+"' style='margin-right: 5px;'>"+value+"</span>");
