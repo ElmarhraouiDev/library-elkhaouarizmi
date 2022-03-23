@@ -119,7 +119,7 @@ class Bookissue extends Admin_Controller
             if (calculate($member)) {
                 $books_ = $this->book_m->get_book();
                 foreach ($books_ as $rackID){
-                    $data['book'][] = $rackID->$rackID;
+                    $data[] = $rackID->$rackID;
                 }    
                 $data['book'] = $data;           
                 // $this->data['member']       = $member;
