@@ -305,7 +305,7 @@
                 valuechanged = value.replace("/", "_");
                 $("#container_ids").append("<span onclick=remove_id('"+value+"') class='label label-primary btncode "+valuechanged+"' style='margin-right: 5px;'>"+value+"</span>");
             } else {
-                console.log('error')
+                console.log('error00')
             }
             
             $("#issue_booksID").val('');
