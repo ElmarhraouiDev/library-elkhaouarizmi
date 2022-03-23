@@ -1043,6 +1043,7 @@ class Bookissue extends Admin_Controller
         echo "<option value='0'>" . $this->lang->line('bookissue_please_select') . "</option>";
         if ($_POST && permissionChecker('bookissue_add')) {
             $roleID = $this->input->post('roleID');
+            print_r("ok");
             if ((int) $roleID) {
                 $members = $this->member_m->get_order_by_member(array('roleID' => $roleID, 'status' => 1, 'deleted_at' => 0), array('memberID', 'name'));
                 if (calculate($members)) {
