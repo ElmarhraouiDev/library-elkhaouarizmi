@@ -110,7 +110,7 @@ class Bookissue extends Admin_Controller
     {
         $data['success'] = 0;
         $data['books'] = [];
-        $data['book']= [];
+        // $data['book']= [];
         $books = array();
         $data_ = [];
         $memberCode = htmlentities(escapeString($this->uri->segment(3)));
@@ -121,7 +121,7 @@ class Bookissue extends Admin_Controller
                 foreach ($books_ as $rackID){
                     $data_[] = $rackID->codeno;
                 }    
-                $data['book'] = $data_;           
+                $data['books'] = $data_;           
                 // $this->data['member']       = $member;
                 // $this->data['bookcategory'] = pluck($this->bookcategory_m->get_bookcategory(), 'name', 'bookcategoryID');
                 // $this->data['book']         = pluck($this->book_m->get_book(), 'name', 'bookID');
