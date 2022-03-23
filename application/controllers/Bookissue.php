@@ -110,15 +110,18 @@ class Bookissue extends Admin_Controller
     {
         $data['success'] = 0;
         $data['books'] = [];
-        $data['book_']= [];
+        $data['book']= [];
+        $data = array();
         $books = array();
         $memberCode = htmlentities(escapeString($this->uri->segment(3)));
         if ((int) $memberCode) {
             $member = $this->member_m->get_single_member(array('code' => $memberCode));
             if (calculate($member)) {
-                print_r($this->book_m->get_book());
-                $this->data['book_'] = pluck($this->book_m->get_book(),'name', 'bookID');
-
+                $books_ = $this->book_m->get_book();
+                foreach ($books_ as $rackID){
+                    $data['book'][] = $rackID->$rackID;
+                }    
+                $data['book'] = $data;           
                 // $this->data['member']       = $member;
                 // $this->data['bookcategory'] = pluck($this->bookcategory_m->get_bookcategory(), 'name', 'bookcategoryID');
                 // $this->data['book']         = pluck($this->book_m->get_book(), 'name', 'bookID');
