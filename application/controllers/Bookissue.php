@@ -158,7 +158,6 @@ class Bookissue extends Admin_Controller
 
     public function addfast()
     {
-        print("ok1");
         if ($_POST) {
 
             $memberID   = $this->input->post('memberID');
@@ -302,7 +301,6 @@ class Bookissue extends Admin_Controller
 
     public function add()
     {
-        print("ok2");
         $this->data['headerassets'] = array(
             'css'      => array(
                 'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
