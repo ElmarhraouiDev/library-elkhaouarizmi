@@ -296,23 +296,27 @@
         }
     });
 
-    // $("#issue_booksID").on('keyup', function (e) {
-    //     if (e.key === 'Enter' || e.keyCode === 13) {
-    //         var value = $(this).val();
-    //         //  books_ids.includes(value) && !books_ids_seletions.includes(value)
-    //         console.log(books_ids);
-    //         console.log(books_ids_seletions);
-    //         if (true) {
-    //             books_ids_seletions.push(value);
-    //             valuechanged = value.replace("/", "_");
-    //             $("#container_ids").append("<span onclick=remove_id('"+value+"') class='label label-primary btncode "+valuechanged+"' style='margin-right: 5px;'>"+value+"</span>");
-    //         } else {
-    //             console.log('error00')
-    //         }
+    $("#issue_booksID").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            var value = $(this).val();
+            //  books_ids.includes(value) && !books_ids_seletions.includes(value)
+            console.log(books_ids);
+            console.log(books_ids_seletions);
+            console.log(books_ids_seletions_filter);
+            console.log(books_ids_filter);
             
-    //         $("#issue_booksID").val('');
-    //     }
-    // });
+            
+            if (true) {
+                books_ids_seletions.push(value);
+                valuechanged = value.replace("/", "_");
+                $("#container_ids").append("<span onclick=remove_id('"+value+"') class='label label-primary btncode "+valuechanged+"' style='margin-right: 5px;'>"+value+"</span>");
+            } else {
+                console.log('error00')
+            }
+            
+            $("#issue_booksID").val('');
+        }
+    });
 
     $("#btn_cancel").on('click', function (e) {
         $("#issue_memberID").prop('disabled', false);
@@ -442,7 +446,7 @@
     });
 
 
-    $("#issue_booksID").on('keyup', function (e) {
+    $("#issue_booksID_filter").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             var value = $(this).val();
 
@@ -454,7 +458,7 @@
                 console.log('error')
             }
             
-            $("#issue_booksID").val('');
+            $("#issue_booksID_filter").val('');
         }
     });
 
