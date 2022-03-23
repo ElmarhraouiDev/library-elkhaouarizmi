@@ -299,7 +299,7 @@
     $("#issue_booksID").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             var value = $(this).val();
-
+     console.log(value);
             if (books_ids.includes(value) && !books_ids_seletions.includes(value)) {
                 books_ids_seletions.push(value);
                 valuechanged = value.replace("/", "_");
