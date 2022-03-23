@@ -119,9 +119,9 @@ class Bookissue extends Admin_Controller
             if (calculate($member)) {
                 $books_ = $this->book_m->get_book();
                 foreach ($books_ as $rackID){
-                    echo $rackID->$rackID;
+                    $data_[] = $rackID->rackID;
                 }    
-                         
+                $data['book'] = $data_;           
                 // $this->data['member']       = $member;
                 // $this->data['bookcategory'] = pluck($this->bookcategory_m->get_bookcategory(), 'name', 'bookcategoryID');
                 // $this->data['book']         = pluck($this->book_m->get_book(), 'name', 'bookID');
