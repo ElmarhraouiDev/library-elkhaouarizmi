@@ -215,7 +215,7 @@ class Bookissue extends Admin_Controller
                 $booknovol = $arrayBooknovol[0];
 
                 $book     = $this->book_m->get_single_book(['codeno' => $bookCodeno]);
-                print_r($book);
+               
                 if (!calculate($book)) {
                     $bookCodes_error_count++;
                     continue;
@@ -296,7 +296,6 @@ class Bookissue extends Admin_Controller
             }
 
             $books_success = $bookCodes_count - $bookCodes_error_count;
-
             $this->session->set_flashdata('success', $books_success.'/'.$bookCodes_count.' Books Success');
             die(json_encode(['success' => 0]));
             // redirect(base_url('bookissue/index'));
