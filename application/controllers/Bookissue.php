@@ -215,7 +215,7 @@ class Bookissue extends Admin_Controller
                 $booknovol = $arrayBooknovol[0];
 
                 $book     = $this->book_m->get_single_book(['codeno' => $bookCodeno]);
-
+                print_r($book);
                 if (!calculate($book)) {
                     $bookCodes_error_count++;
                     continue;
