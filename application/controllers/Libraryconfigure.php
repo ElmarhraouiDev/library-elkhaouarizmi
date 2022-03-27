@@ -185,7 +185,7 @@ class Libraryconfigure extends Admin_Controller
             array(
                 'field' => 'booktypeID',
                 'label' => $this->lang->line('libraryconfigure_booktype'),
-                'rules' => 'trim|xss_clean|callback_check_default|required|callback_check_unique_role',
+                'rules' => 'trim|xss_clean|callback_check_default|required',
             ),
         );
         return $rules;
