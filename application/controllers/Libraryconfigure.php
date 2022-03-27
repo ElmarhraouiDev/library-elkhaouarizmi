@@ -48,17 +48,12 @@ class Libraryconfigure extends Admin_Controller
         $this->data['roles'] = $this->role_m->get_role();
         $this->data['booktypes']    = $this->booktype_m->get_booktype();
         if ($_POST) {
-            // $rules = $this->rules();
-            // $this->form_validation->set_rules($rules);
-        
-            // if ($this->form_validation->run() == false) {
-            //     $this->data["subview"] = "libraryconfigure/add";
-            //     $this->load->view('_main_layout', $this->data);
-            // } else {
-                // if($this->input->post('booktypeID')==0){
-                //     $this->session->set_flashdata('success','book type ID');
-                //     die;
-                // }
+            $rules = $this->rules();
+            $this->form_validation->set_rules($rules);
+            if ($this->form_validation->run() == false) {
+                $this->data["subview"] = "libraryconfigure/add";
+                $this->load->view('_main_layout', $this->data);
+            } else {
                 $array                           = [];
                 $array['roleID']                 = $this->input->post('roleID');
                 $array['max_issue_book']         = $this->input->post('max_issue_book');
@@ -71,7 +66,7 @@ class Libraryconfigure extends Admin_Controller
 
                 $this->session->set_flashdata('success', 'Success11');
                 redirect(base_url('libraryconfigure/index'));
-            // }
+            }
         } else {
             $this->data["subview"] = "libraryconfigure/add";
             $this->load->view('_main_layout', $this->data);
@@ -103,7 +98,7 @@ class Libraryconfigure extends Admin_Controller
                 if ($_POST) {
                     $rules = $this->rules();
                     $this->form_validation->set_rules($rules);
-                    if ($this->form_validation->run() == false  ||  $this->input->post('booktypeID')=="0") {
+                    if ($this->form_validation->run() == false  ||  $this->input->post('booktypeID') == "0") {
                         $this->data["subview"] = "libraryconfigure/edit";
                         $this->load->view('_main_layout', $this->data);
                     } else {
@@ -190,24 +185,24 @@ class Libraryconfigure extends Admin_Controller
             array(
                 'field' => 'booktypeID',
                 'label' => $this->lang->line('libraryconfigure_booktype'),
-                'rules' => 'trim|xss_clean|callback_check_default',
+                'rules' => 'trim|xss_clean|callback_check_default|required|callback_check_unique_role',
             ),
         );
         return $rules;
     }
 
-    public function check_unique_role($roleID)
+    public function check_unique_role($roleID,$booktypeID)
     {
         $libraryconfigureID = htmlentities(escapeString($this->uri->segment(3)));
         if ((int) $libraryconfigureID) {
-            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID));
+            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID,'booktypeID ='=>$booktypeID));
             if (calculate($libraryconfigure)) {
                 $this->form_validation->set_message("check_unique_role", "The %s is already exits.");
                 return false;
             }
             return true;
         } else {
-            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID));
+            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktypeID ='=>$booktypeID));
             if (calculate($libraryconfigure)) {
                 $this->form_validation->set_message("check_unique_role", "The %s is already exits.");
                 return false;
@@ -219,18 +214,16 @@ class Libraryconfigure extends Admin_Controller
     function check_default()
     {
         $choice = $this->input->post("booktypeID");
-        if(empty($choice))
-        {
+        if (empty($choice)) {
             $choice = array();
         }
         $booktypeID = implode(',', $choice);
 
-        if($booktypeID != '')
+        if ($booktypeID != '')
             return true;
         else {
             $this->form_validation->set_message("check_default", "The %s field is required.");
-            return false;   
+            return false;
         }
     }
-
 }
