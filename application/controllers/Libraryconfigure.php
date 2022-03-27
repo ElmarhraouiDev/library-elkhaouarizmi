@@ -195,9 +195,8 @@ class Libraryconfigure extends Admin_Controller
     {
          // ,'booktype ='=>$booktypeID
         $libraryconfigureID = htmlentities(escapeString($this->uri->segment(3)));
-        $booktypeID = htmlentities(escapeString($this->uri->segment(4)));
-        print($booktypeID);
-        print_r($this->uri);
+        $booktypeID = htmlentities(escapeString($this->uri->segment(5)));
+        print_r($booktypeID);
         die;
         if ((int) $libraryconfigureID) {
             $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID));
