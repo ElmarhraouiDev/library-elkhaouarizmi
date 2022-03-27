@@ -193,6 +193,8 @@ class Libraryconfigure extends Admin_Controller
 
     public function check_unique_role($roleID,$booktypeID)
     {
+        print_r($booktypeID);
+        die;
         $libraryconfigureID = htmlentities(escapeString($this->uri->segment(3)));
         if ((int) $libraryconfigureID) {
             $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID,'booktype ='=>$booktypeID));
