@@ -191,11 +191,11 @@ class Libraryconfigure extends Admin_Controller
         return $rules;
     }
 
-    public function check_unique_role($roleID,$booktypeID)
+    public function check_unique_role($roleID)
     {
          // ,'booktype ='=>$booktypeID
         $libraryconfigureID = htmlentities(escapeString($this->uri->segment(3)));
-     //   $booktypeID = htmlentities(escapeString($this->uri->segment(5)));
+        $booktypeID =$this->input->post('booktypeID');
         print_r($booktypeID);
         die;
         if ((int) $libraryconfigureID) {
