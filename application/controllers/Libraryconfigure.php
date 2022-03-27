@@ -185,7 +185,7 @@ class Libraryconfigure extends Admin_Controller
             array(
                 'field' => 'booktypeID',
                 'label' => $this->lang->line('libraryconfigure_booktype'),
-                'rules' => 'trim|xss_clean|callback_check_default|required',
+                'rules' => 'trim|xss_clean|callback_check_default|required_no_zero',
             ),
         );
         return $rules;
@@ -196,8 +196,6 @@ class Libraryconfigure extends Admin_Controller
          // ,'booktype ='=>$booktypeID
         $libraryconfigureID = htmlentities(escapeString($this->uri->segment(3)));
         $booktypeID =$this->input->post('booktypeID')[0];
-        print($booktypeID);
-        die;
         if ((int) $libraryconfigureID) {
             $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID,'booktype ='=>$booktypeID));
             if (calculate($libraryconfigure)) {
