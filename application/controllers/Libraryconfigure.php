@@ -193,18 +193,17 @@ class Libraryconfigure extends Admin_Controller
 
     public function check_unique_role($roleID,$booktypeID)
     {
-        print_r($booktypeID);
-        die;
+         // ,'booktype ='=>$booktypeID
         $libraryconfigureID = htmlentities(escapeString($this->uri->segment(3)));
         if ((int) $libraryconfigureID) {
-            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID,'booktype ='=>$booktypeID));
+            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID));
             if (calculate($libraryconfigure)) {
                 $this->form_validation->set_message("check_unique_role", "The %s is already exits.");
                 return false;
             }
             return true;
         } else {
-            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype ='=>$booktypeID));
+            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID));
             if (calculate($libraryconfigure)) {
                 $this->form_validation->set_message("check_unique_role", "The %s is already exits.");
                 return false;
