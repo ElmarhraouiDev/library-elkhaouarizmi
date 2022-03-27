@@ -200,7 +200,7 @@ class Libraryconfigure extends Admin_Controller
             $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'libraryconfigureID !=' => $libraryconfigureID,'booktype ='=>$booktypeID));
             if (calculate($libraryconfigure)) {
                 $this->session->set_flashdata('success', 'The role and book type are already exits.');
-      //          $this->form_validation->set_message("check_unique_role", "The %s and book type are already exits.");
+                $this->form_validation->set_message("check_unique_role", "The %s  is already exits.");
                 return false;
             }
             return true;
@@ -208,6 +208,7 @@ class Libraryconfigure extends Admin_Controller
             $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype ='=>$booktypeID));
             if (calculate($libraryconfigure)) {
                 $this->session->set_flashdata('success', 'The role and book type are already exits.');
+                $this->form_validation->set_message("check_unique_role", "The %s  is already exits.");
                 return false;
             }
             return true;
