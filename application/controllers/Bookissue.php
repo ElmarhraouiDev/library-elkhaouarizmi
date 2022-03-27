@@ -166,6 +166,7 @@ class Bookissue extends Admin_Controller
 
     public function addfast()
     {
+        
         if ($_POST) {
 
             $memberID   = $this->input->post('memberID');
@@ -180,7 +181,8 @@ class Bookissue extends Admin_Controller
             $member   = $this->member_m->get_single_member(['code' => $memberID]);
             $roleID           = $member->roleID;
             $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID));
-            
+            print_r($libraryconfigure);
+            die;
             if (!calculate($libraryconfigure)) {
                 $libraryconfigure = (object) $this->libraryconfigure_m->libraryconfigure;
             }
