@@ -50,7 +50,10 @@ class Libraryconfigure extends Admin_Controller
         if ($_POST) {
             $rules = $this->rules();
             $this->form_validation->set_rules($rules);
-            print_r($this->input->post('booktypeID'));
+            if($this->input->post('booktypeID')=="0"){
+                $this->session->set_flashdata('success','book type ID');
+                die;
+            }
             if ($this->form_validation->run() == false) {
                 $this->data["subview"] = "libraryconfigure/add";
                 $this->load->view('_main_layout', $this->data);
