@@ -35,7 +35,7 @@
                                         $booktypeArray[$booktype->booktypeID] = $booktype->name;
                                       }
                                     }
-                                    echo form_dropdown('booktypeID[]', $booktypeArray,set_value('booktypeID'),'id="booktypeID" class="form-control" multiple');
+                                    echo form_dropdown('booktypeID[]', $booktypeArray,set_value('booktypeID'),'id="booktypeID" class="form-control"');
                                 ?>
                                 <?=form_error('booktypeID')?>
                             </div>
