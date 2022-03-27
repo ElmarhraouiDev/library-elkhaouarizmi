@@ -48,19 +48,17 @@ class Libraryconfigure extends Admin_Controller
         $this->data['roles'] = $this->role_m->get_role();
         $this->data['booktypes']    = $this->booktype_m->get_booktype();
         if ($_POST) {
-            $rules = $this->rules();
-            $this->form_validation->set_rules($rules);
+            // $rules = $this->rules();
+            // $this->form_validation->set_rules($rules);
         
             if ($this->form_validation->run() == false) {
                 $this->data["subview"] = "libraryconfigure/add";
                 $this->load->view('_main_layout', $this->data);
             } else {
-                if($this->input->post('booktypeID')==0){
-                    $this->session->set_flashdata('success','book type ID');
-                //     $this->data["subview"] = "libraryconfigure/add";
-                // $this->load->view('_main_layout', $this->data);
-                    die;
-                }
+                // if($this->input->post('booktypeID')==0){
+                //     $this->session->set_flashdata('success','book type ID');
+                //     die;
+                // }
                 $array                           = [];
                 $array['roleID']                 = $this->input->post('roleID');
                 $array['max_issue_book']         = $this->input->post('max_issue_book');
