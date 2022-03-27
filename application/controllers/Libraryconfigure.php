@@ -50,16 +50,17 @@ class Libraryconfigure extends Admin_Controller
         if ($_POST) {
             $rules = $this->rules();
             $this->form_validation->set_rules($rules);
-            if($this->input->post('booktypeID')==0){
-                $this->session->set_flashdata('success','book type ID');
-            //     $this->data["subview"] = "libraryconfigure/add";
-            // $this->load->view('_main_layout', $this->data);
-                die;
-            }
+        
             if ($this->form_validation->run() == false) {
                 $this->data["subview"] = "libraryconfigure/add";
                 $this->load->view('_main_layout', $this->data);
             } else {
+                if($this->input->post('booktypeID')==0){
+                    $this->session->set_flashdata('success','book type ID');
+                //     $this->data["subview"] = "libraryconfigure/add";
+                // $this->load->view('_main_layout', $this->data);
+                    die;
+                }
                 $array                           = [];
                 $array['roleID']                 = $this->input->post('roleID');
                 $array['max_issue_book']         = $this->input->post('max_issue_book');
@@ -70,7 +71,7 @@ class Libraryconfigure extends Admin_Controller
                 $array['booktype']               = implode(',', $this->input->post('booktypeID'));
                 $this->libraryconfigure_m->insert_libraryconfigure($array);
 
-                $this->session->set_flashdata('success', 'Success');
+                $this->session->set_flashdata('success', 'Success11');
                 redirect(base_url('libraryconfigure/index'));
             }
         } else {
