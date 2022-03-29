@@ -228,8 +228,9 @@ class Bookissue extends Admin_Controller
                     continue;
                 }
 
-                print_r($bookitem);
-                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $bookitem->booktypeID));
+                print_r($book);
+                // $bookID = $bookitem->bookID;
+                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $book->bookID));
                 print("ok");
                 print_r($libraryconfigure);
                 die;
