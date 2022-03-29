@@ -196,11 +196,7 @@ class Bookissue extends Admin_Controller
 
             foreach($bookCodes as $bookcode) {
                 $arrayBookcode = explode('-', $bookcode);
-                
-                if (empty($libraryconfigure)) {
-                    $bookCodes_error_count++;
-                    continue;
-                }
+              
                 if (empty($arrayBookcode) || count($arrayBookcode) != 3) {
                     $bookCodes_error_count++;
                     continue;
@@ -237,6 +233,12 @@ class Bookissue extends Admin_Controller
                 print("ok");
                 print_r($libraryconfigure);
                 die;
+
+                  
+                if (empty($libraryconfigure)) {
+                    $bookCodes_error_count++;
+                    continue;
+                }
 
                 
                // hayadtha
