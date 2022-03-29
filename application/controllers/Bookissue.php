@@ -197,6 +197,7 @@ class Bookissue extends Admin_Controller
             foreach($bookCodes as $bookcode) {
                 $arrayBookcode = explode('-', $bookcode);
                 $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $bookcode->booktypeID));
+                print("ok");
                 print_r($libraryconfigure);
                 die;
                 if (empty($libraryconfigure)) {
