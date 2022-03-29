@@ -234,7 +234,11 @@ class Bookissue extends Admin_Controller
                     $bookCodes_error_count++;
                     continue;
                 }
-                $bookissue = $this->bookissue_m->get_order_by_bookissue(array('memberID' => $memberID, 'status' => 0,'bookissue_type'=> $book->booktypeID));
+                $bookissue = $this->bookissue_m->get_order_by_bookissue(array('memberID' => $memberID, 'status' => 0,'deleted_at'=> 0,'bookissue_type'=> $book->booktypeID));
+                print(Count($bookissue) );
+                print("\n ok");
+                print($libraryconfigure->max_issue_book);
+                die;
                 if(Count($bookissue) >= $libraryconfigure->max_issue_book){
                     $test_max_issue_book = 1;
                     $this->session->set_flashdata('error', "had libraryconfigure dyal type  '$book->booktypeID'  dyal book '$book->name'  makatfotch '$libraryconfigure->max_issue_book'");
