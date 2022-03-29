@@ -180,26 +180,29 @@ class Bookissue extends Admin_Controller
             $issue_date = date('Y-m-d H:i:s');
             $member   = $this->member_m->get_single_member(['code' => $memberID]);
             $roleID           = $member->roleID;
-            $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID));
-            // print_r($libraryconfigure);
-            die;
-            if (!calculate($libraryconfigure)) {
-                $libraryconfigure = (object) $this->libraryconfigure_m->libraryconfigure;
-            }
+        //    $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'roleID' => $roleID));
+            // if (!calculate($libraryconfigure)) {
+            //     $libraryconfigure = (object) $this->libraryconfigure_m->libraryconfigure;
+            // }
 
-            $booktypes = [];
+            // $booktypes = [];
             
-            if (calculate($libraryconfigure)) {
-                $booktypes = explode(',', $libraryconfigure->booktype);
-            }
+            // if (calculate($libraryconfigure)) {
+            //     $booktypes = explode(',', $libraryconfigure->booktype);
+            // }
 
             $bookCodes_count = count($bookCodes);
             $bookCodes_error_count = 0;
 
             foreach($bookCodes as $bookcode) {
-
                 $arrayBookcode = explode('-', $bookcode);
-
+                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $bookcode->booktypeID));
+                print_r($libraryconfigure);
+                die;
+                if (empty($libraryconfigure)) {
+                    $bookCodes_error_count++;
+                    continue;
+                }
                 if (empty($arrayBookcode) || count($arrayBookcode) != 3) {
                     $bookCodes_error_count++;
                     continue;
@@ -229,11 +232,11 @@ class Bookissue extends Admin_Controller
                     $bookCodes_error_count++;
                     continue;
                 }
-
-                if (!in_array($book->booktypeID, $booktypes)) {
-                    $bookCodes_error_count++;
-                    continue;
-                }
+               // hayadtha
+                // if (!in_array($book->booktypeID, $booktypes)) {
+                //     $bookCodes_error_count++;
+                //     continue;
+                // }
 
                 $bookcategoryID = explode(',', trim($book->bookcategoryID, ','))[0];
                 $booktype       = $this->booktype_m->get_single_booktype(['booktypeID' => $book->booktypeID]);
