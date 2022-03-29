@@ -227,10 +227,8 @@ class Bookissue extends Admin_Controller
                     $bookCodes_error_count++;
                     continue;
                 }
-
-                print_r($book);
                 // $bookID = $bookitem->bookID;
-                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $book->bookID));
+                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $book->booktypeID));
                 print("ok");
                 print_r($libraryconfigure);
                 die;
