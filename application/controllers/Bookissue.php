@@ -238,7 +238,8 @@ class Bookissue extends Admin_Controller
                 print(Count($bookissue) );
                 print("\n ok");
                 print($libraryconfigure->max_issue_book);
-                die;
+                exit;
+                return false;
                 if(Count($bookissue) >= $libraryconfigure->max_issue_book){
                     $test_max_issue_book = 1;
                     $this->session->set_flashdata('error', "had libraryconfigure dyal type  '$book->booktypeID'  dyal book '$book->name'  makatfotch '$libraryconfigure->max_issue_book'");
