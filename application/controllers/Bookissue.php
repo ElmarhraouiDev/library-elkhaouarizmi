@@ -198,13 +198,15 @@ class Bookissue extends Admin_Controller
                 $arrayBookcode = explode('-', $bookcode);
               
                 if (empty($arrayBookcode) || count($arrayBookcode) != 3) {
+                    print("\n ok1");
                     $bookCodes_error_count++;
                     continue;
                 }
-
+                
                 $arrayBooknovol = explode('/', $arrayBookcode[2]);
 
                 if (empty($arrayBooknovol) || count($arrayBooknovol) != 2) {
+                    print("\n ok2");
                     $bookCodes_error_count++;
                     continue;
                 }
@@ -212,18 +214,20 @@ class Bookissue extends Admin_Controller
                 $bookCodeno = $arrayBookcode[0];
                 $bookno = $arrayBookcode[1];
                 $booknovol = $arrayBooknovol[0];
-
+                
                 $book     = $this->book_m->get_single_book(['codeno' => $bookCodeno]);
                 
                
                 if (!calculate($book)) {
+                    print("\n ok3");
                     $bookCodes_error_count++;
                     continue;
                 }
-
+                
                 $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
 
                 if (!calculate($bookitem)) {
+                    print("\n ok4");
                     $bookCodes_error_count++;
                     continue;
                 }
@@ -231,6 +235,7 @@ class Bookissue extends Admin_Controller
                 $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $book->booktypeID));
                 
                 if (empty($libraryconfigure)) {
+                    print("\n ok5");
                     $bookCodes_error_count++;
                     continue;
                 }
