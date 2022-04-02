@@ -98,5 +98,10 @@ class Bookissue_m extends MY_Model
         $this->db->where('deleted_at', 0);
         return $this->db->get()->result();
     }
+    public function test($booktypeID){
+        $sql = "'SELECT count(*) FROM bookissue bi  inner join book bo on(bi.bookID = bo.bookID)  where bo.booktypeID = $booktypeID and bi.status = 0";
+        $query = $this->db->query( $sql );
+        return  $query;
+    }
 
 }

@@ -242,9 +242,20 @@ class Bookissue extends Admin_Controller
                 }
 
                 $typeBook = $this->booktype_m->get_single_booktype(array('booktypeID' => $libraryconfigure->booktype));
+
+                
+                $bookissue = $this->bookissue_m->test($typeBook->booktypeID);
+                var_dump($bookissue);
+                return false;
+
+
+                $bookissue = $this->bookissue_m->get_order_by_bookissue(array('memberID' => $memberID, 'status' => 0,'deleted_at'=> 0));
+                // foreach ($bookissue as $book){
+                    
+                // }
+
                 var_dump($typeBook);
                 return false;
-                $bookissue = $this->bookissue_m->get_order_by_bookissue(array('memberID' => $memberID, 'status' => 0,'deleted_at'=> 0,'bookissue_type'=> $typeBook->booktypeID));
                 // print(Count($bookissue) );
                 // print("\n ok");
                  print("bookissue count : ".Count($bookissue));
