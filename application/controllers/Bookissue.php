@@ -244,11 +244,11 @@ class Bookissue extends Admin_Controller
                 $typeBook = $this->booktype_m->get_single_booktype(array('booktypeID' => $libraryconfigure->booktype));
                 $bookissue = $this->bookissue_m->test_bookissue($typeBook->booktypeID,$memberID);
 
-                 print("bookissue count : ".$bookissue);
-                   print("\n ok \n");
-                print("max_issue_book ".$libraryconfigure->max_issue_book);
+                //  print("bookissue count : ".$bookissue);
+                //    print("\n ok \n");
+                // print("max_issue_book ".$libraryconfigure->max_issue_book);
 
-                print("\n fioiin \n");
+                // print("\n fioiin \n");
                
                 if(  (intval(Count($bookissue))  >= intval($libraryconfigure->max_issue_book)) ){
                     $test_max_issue_book = 1;
@@ -332,11 +332,11 @@ class Bookissue extends Admin_Controller
             $books_success = $bookCodes_count - $bookCodes_error_count;
             $this->session->set_flashdata('success', $books_success.'/'.$bookCodes_count.' Books Success');
             die(json_encode(['success' => 0]));
-            // redirect(base_url('bookissue/index'));
+            redirect(base_url('bookissue/index'));
 
         } else {
             die(json_encode(['success' => 1]));
-            // redirect(base_url('bookissue/index'));
+            redirect(base_url('bookissue/index'));
         }
     }
 
