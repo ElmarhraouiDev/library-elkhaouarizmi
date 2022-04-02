@@ -258,7 +258,6 @@ class Bookissue extends Admin_Controller
                 if($test_max_issue_book == 1){
                     $list_book_error[] = array("code_book"=>$bookcode,"message"=>"max_issue_book maymkanch ifotha !!") ;
                     $bookCodes_error_count++;
-                    $this->session->set_flashdata('success',"$bookcode no  Success");
                     continue;
                 }      
 
@@ -330,6 +329,11 @@ class Bookissue extends Admin_Controller
                 $fineArray['modify_memberID'] = $this->session->userdata('loginmemberID');
                 $fineArray['modify_roleID']   = $this->session->userdata('roleID');
                 $this->finehistory_m->insert_finehistory($fineArray);
+                
+                $books_success = $bookCodes_count - $bookCodes_error_count;
+                if(Count($list_book_error) != 0){
+                    $this->session->set_flashdata('success', $books_success.'/'.$bookCodes_count.' Books Success');
+                }
             }
 
             $books_success = $bookCodes_count - $bookCodes_error_count;
