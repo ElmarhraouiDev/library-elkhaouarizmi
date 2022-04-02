@@ -240,11 +240,11 @@ class Bookissue extends Admin_Controller
                     $bookCodes_error_count++;
                     continue;
                 }
-                
+
                 $typeBook = $this->booktype_m->get_single_booktype(array('booktypeID' => $libraryconfigure->booktype));
                 $bookissue = $this->bookissue_m->test_bookissue($typeBook->booktypeID,$memberID);
 
-                 print("bookissue count : ".Count($bookissue));
+                 print("bookissue count : ".$bookissue);
                    print("\n ok \n");
                 print("max_issue_book ".$libraryconfigure->max_issue_book);
 
