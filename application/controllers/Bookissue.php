@@ -194,6 +194,7 @@ class Bookissue extends Admin_Controller
             $bookCodes_count = count($bookCodes);
             $bookCodes_error_count = 0;
             $test_max_issue_book = 0;
+            $list_book_error = [];
             foreach($bookCodes as $bookcode) {
                 $arrayBookcode = explode('-', $bookcode);
                 $test_max_issue_book = 0;
@@ -254,16 +255,11 @@ class Bookissue extends Admin_Controller
                     die(json_encode(['success' => 0]));
                 }
 
-                if($test_max_issue_book == 0)
-                print("momkin");
-                else
-                print("ma momkin");
-
-                exit;
-                return false;
-
-
-                  
+                if($test_max_issue_book != 0){
+                    $list_book_error[] = array("code_book"=>$bookcode,"message"=>"max_issue_book maymkanch ifotha !!") ;
+                    $bookCodes_error_count++;
+                    continue;
+                }      
                // hayadtha
                 // if (!in_array($book->booktypeID, $booktypes)) {
                 //     $bookCodes_error_count++;
