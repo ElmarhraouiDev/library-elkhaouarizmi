@@ -224,13 +224,13 @@ class Bookissue extends Admin_Controller
                     continue;
                 }
                 
-                $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
+                // $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
 
-                if (!calculate($bookitem)) {
-                    print("\n ok4");
-                    $bookCodes_error_count++;
-                    continue;
-                }
+                // if (!calculate($bookitem)) {
+                //     print("\n ok4");
+                //     $bookCodes_error_count++;
+                //     continue;
+                // }
                 // $bookID = $bookitem->bookID;
                 $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $book->booktypeID));
                 
