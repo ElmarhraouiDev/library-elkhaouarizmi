@@ -246,7 +246,7 @@ class Bookissue extends Admin_Controller
 
                 //  print("bookissue count : ".$bookissue);
                 //    print("\n ok \n");
-                // print("max_issue_book ".$libraryconfigure->max_issue_book);
+            
 
                 // print("\n fioiin \n");
                
@@ -260,13 +260,18 @@ class Bookissue extends Admin_Controller
                     $list_book_error[] = array("code_book"=>$bookcode,"message"=>"max_issue_book maymkanch ifotha !!") ;
                     $bookCodes_error_count++;
                     $this->session->set_flashdata('success', "no $bookcode");
-                    continue;
+                 //   continue;
                 }      
+
+                       print("max_issue_book ".$libraryconfigure->max_issue_book);
+                       print("           $test_max_issue_book");
+                return false;
                // hayadtha
                 // if (!in_array($book->booktypeID, $booktypes)) {
                 //     $bookCodes_error_count++;
                 //     continue;
                 // }
+           
 
                 $bookcategoryID = explode(',', trim($book->bookcategoryID, ','))[0];
                 $booktype       = $this->booktype_m->get_single_booktype(['booktypeID' => $book->booktypeID]);
