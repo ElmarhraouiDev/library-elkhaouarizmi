@@ -242,8 +242,9 @@ class Bookissue extends Admin_Controller
                 $bookissue = $this->bookissue_m->get_order_by_bookissue(array('memberID' => $memberID, 'status' => 0,'deleted_at'=> 0,'bookissue_type'=> $book->booktypeID));
                 // print(Count($bookissue) );
                 // print("\n ok");
-                // print($libraryconfigure->max_issue_book);
-                print("nadi");
+                 print("bookissue count : ".Count($bookissue));
+                   print("\n ok \n");
+                print("max_issue_book ".$libraryconfigure->max_issue_book);
                 exit;
                 return false;
                 if(Count($bookissue) >= $libraryconfigure->max_issue_book){
