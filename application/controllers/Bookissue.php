@@ -227,7 +227,7 @@ class Bookissue extends Admin_Controller
                 // $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
 
                 // if (!calculate($bookitem)) {
-                //     print("\n ok4");
+                //     print("\n ok5");
                 //     $bookCodes_error_count++;
                 //     continue;
                 // }
@@ -240,9 +240,10 @@ class Bookissue extends Admin_Controller
                     continue;
                 }
                 $bookissue = $this->bookissue_m->get_order_by_bookissue(array('memberID' => $memberID, 'status' => 0,'deleted_at'=> 0,'bookissue_type'=> $book->booktypeID));
-                print(Count($bookissue) );
-                print("\n ok");
-                print($libraryconfigure->max_issue_book);
+                // print(Count($bookissue) );
+                // print("\n ok");
+                // print($libraryconfigure->max_issue_book);
+                print("nadi");
                 exit;
                 return false;
                 if(Count($bookissue) >= $libraryconfigure->max_issue_book){
