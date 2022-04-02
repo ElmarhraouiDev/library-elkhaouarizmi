@@ -193,10 +193,10 @@ class Bookissue extends Admin_Controller
 
             $bookCodes_count = count($bookCodes);
             $bookCodes_error_count = 0;
-
+            $test_max_issue_book = 0;
             foreach($bookCodes as $bookcode) {
                 $arrayBookcode = explode('-', $bookcode);
-              
+                $test_max_issue_book = 0;
                 if (empty($arrayBookcode) || count($arrayBookcode) != 3) {
                     print("\n ok1");
                     $bookCodes_error_count++;
@@ -245,13 +245,24 @@ class Bookissue extends Admin_Controller
                  print("bookissue count : ".Count($bookissue));
                    print("\n ok \n");
                 print("max_issue_book ".$libraryconfigure->max_issue_book);
-                exit;
-                return false;
-                if(Count($bookissue) >= $libraryconfigure->max_issue_book){
+
+                print("\n fioiin \n");
+               
+                if(  (intval(Count($bookissue))  >= intval($libraryconfigure->max_issue_book)) ){
                     $test_max_issue_book = 1;
                     $this->session->set_flashdata('error', "had libraryconfigure dyal type  '$book->booktypeID'  dyal book '$book->name'  makatfotch '$libraryconfigure->max_issue_book'");
                     die(json_encode(['success' => 0]));
                 }
+
+                if($test_max_issue_book == 0)
+                print("momkin");
+                else
+                print("ma momkin");
+
+                exit;
+                return false;
+
+
                   
                // hayadtha
                 // if (!in_array($book->booktypeID, $booktypes)) {
