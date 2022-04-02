@@ -250,7 +250,7 @@ class Bookissue extends Admin_Controller
 
                 // print("\n fioiin \n");
                
-                if(  (intval(Count($bookissue))  >= intval($libraryconfigure->max_issue_book)) ){
+                if(  (intval($bookissue)  >= intval($libraryconfigure->max_issue_book)) ){
                     $test_max_issue_book = 1;
                     $this->session->set_flashdata('error', "had libraryconfigure dyal type  '$book->booktypeID'  dyal book '$book->name'  makatfotch '$libraryconfigure->max_issue_book'");
                     die(json_encode(['success' => 0]));
@@ -260,12 +260,10 @@ class Bookissue extends Admin_Controller
                     $list_book_error[] = array("code_book"=>$bookcode,"message"=>"max_issue_book maymkanch ifotha !!") ;
                     $bookCodes_error_count++;
                     $this->session->set_flashdata('success', "no $bookcode");
-                 //   continue;
+                    continue;
                 }      
 
-                       print("max_issue_book ".$libraryconfigure->max_issue_book);
-                       print("           $test_max_issue_book");
-                return false;
+        
                // hayadtha
                 // if (!in_array($book->booktypeID, $booktypes)) {
                 //     $bookCodes_error_count++;
