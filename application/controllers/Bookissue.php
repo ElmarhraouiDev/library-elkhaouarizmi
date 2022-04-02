@@ -256,9 +256,10 @@ class Bookissue extends Admin_Controller
                     die(json_encode(['success' => 0]));
                 }
 
-                if($test_max_issue_book != 0){
+                if($test_max_issue_book == 1){
                     $list_book_error[] = array("code_book"=>$bookcode,"message"=>"max_issue_book maymkanch ifotha !!") ;
                     $bookCodes_error_count++;
+                    $this->session->set_flashdata('success', "no $bookcode");
                     continue;
                 }      
                // hayadtha
