@@ -14,10 +14,15 @@ class Libraryconfigure_m extends MY_Model
     {
         parent::__construct();
     }
-
+    public function get_libraryconfigure_join_type($array = null, $single = false){
+        $this->db->select('libraryconfigure.*, booktype.name as booktype_name');
+        $this->db->from($this->_table_name);
+        $this->db->join('booktype', 'libraryconfigure.booktype=booktype.booktypeID');
+        return $this->db->get()->result();
+    }
     public function get_libraryconfigure($array = null, $single = false)
     {
-        return parent::get($array, $single)->join('booktype', 'booktype.booktypeID = libraryconfigure.booktype');
+        return parent::get($array, $single);
     }
 
     public function get_order_by_libraryconfigure($wherearray = null, $array = null, $single = false)

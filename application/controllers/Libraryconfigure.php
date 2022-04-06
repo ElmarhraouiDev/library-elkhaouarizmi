@@ -29,7 +29,7 @@ class Libraryconfigure extends Admin_Controller
                 'assets/plugins/datatables.net-bs/js/dataTables.bootstrap.min.js',
             ),
         );
-        $this->data['libraryconfigures'] = $this->libraryconfigure_m->get_libraryconfigure();
+        $this->data['libraryconfigures'] = $this->libraryconfigure_m->get_libraryconfigure_join_type();
         $this->data["subview"]           = "libraryconfigure/index";
         $this->load->view('_main_layout', $this->data);
     }
