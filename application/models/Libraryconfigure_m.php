@@ -17,7 +17,7 @@ class Libraryconfigure_m extends MY_Model
 
     public function get_libraryconfigure($array = null, $single = false)
     {
-        return parent::get($array, $single);
+        return parent::join('booktype', 'booktype.booktypeID = libraryconfigure.booktype')->get($array, $single);
     }
 
     public function get_order_by_libraryconfigure($wherearray = null, $array = null, $single = false)
