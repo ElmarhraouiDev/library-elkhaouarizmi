@@ -36,7 +36,7 @@
                             <tr>
                                 <td data-title="<?=$this->lang->line('libraryconfigure_slno')?>"><?=$i?></td>
                                 <td data-title="<?=$this->lang->line('libraryconfigure_role')?>"><?=isset($roles[$libraryconfigure->roleID]) ? $roles[$libraryconfigure->roleID] : '&nbsp;' ?></td>
-                                <td data-title="<?=$this->lang->line('libraryconfigure_booktype')?>"><?=$libraryconfigure->booktype?></td>
+                                <td data-title="<?=$this->lang->line('libraryconfigure_booktype')?>"><?=$libraryconfigure->booktype_name?></td>
                                 <td data-title="<?=$this->lang->line('libraryconfigure_max_issue_book')?>"><?=$libraryconfigure->max_issue_book?></td>
                                 <td data-title="<?=$this->lang->line('libraryconfigure_max_renewed_limit')?>"><?=$libraryconfigure->max_renewed_limit?></td>
                                 <td data-title="<?=$this->lang->line('libraryconfigure_per_renew_limit_day')?>"><?=$libraryconfigure->per_renew_limit_day?></td>
