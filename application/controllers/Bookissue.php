@@ -22,7 +22,6 @@ class Bookissue extends Admin_Controller
         $lang = $this->session->userdata('language');
         $this->lang->load('bookissue', $lang);
         $this->lang->load('member', $lang);
-
     }
 
     public function index()
@@ -35,7 +34,7 @@ class Bookissue extends Admin_Controller
             $memberID           = $this->input->post('memberID');
             $books_ids_filter   = empty($this->input->post('books_ids_filter')) ? [] : $this->input->post('books_ids_filter');
 
-            foreach($books_ids_filter as $bookcode) {
+            foreach ($books_ids_filter as $bookcode) {
 
                 $arrayBookcode = explode('-', $bookcode);
 
@@ -58,7 +57,6 @@ class Bookissue extends Admin_Controller
                 }
 
                 array_push($arraybooks_ids_filter, $book->bookID);
-                
             }
         } else {
             $memberID = htmlentities(escapeString($this->uri->segment(3)));
@@ -103,13 +101,12 @@ class Bookissue extends Admin_Controller
             $this->data["subview"]      = "bookissue/index";
             $this->load->view('_main_layout', $this->data);
         }
-
     }
 
     public function getmember()
     {
         // ayoub
-        
+
         $data['success'] = 0;
         $data['books'] = [];
         // $data['book']= [];
@@ -120,10 +117,10 @@ class Bookissue extends Admin_Controller
             $member = $this->member_m->get_single_member(array('code' => $memberCode));
             if (calculate($member)) {
                 $books_ = $this->book_m->get_book();
-                foreach ($books_ as $rackID){
+                foreach ($books_ as $rackID) {
                     $data_[] = $rackID->codeno;
-                }    
-                        
+                }
+
                 // $this->data['member']       = $member;
                 // $this->data['bookcategory'] = pluck($this->bookcategory_m->get_bookcategory(), 'name', 'bookcategoryID');
                 // $this->data['book']         = pluck($this->book_m->get_book(), 'name', 'bookID');
@@ -133,26 +130,26 @@ class Bookissue extends Admin_Controller
                 $booktypes = null;
                 $roleID           = $member->roleID;
                 $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID));
-                
+
                 if (calculate($libraryconfigure)) {
                     $booktypes = explode(',', $libraryconfigure->booktype);
                 }
 
-                $booksByTypes = $this->book_m->get_where_in_book('booktypeID', $booktypes,null, array('bookID'));
+                $booksByTypes = $this->book_m->get_where_in_book('booktypeID', $booktypes, null, array('bookID'));
 
-                $booksByTypesIDs = pluck($booksByTypes,'bookID');
+                $booksByTypesIDs = pluck($booksByTypes, 'bookID');
 
-                $books_item = $this->bookitem_m->get_where_in_bookitem('bookID', $booksByTypesIDs, array('status' => 0, 'deleted_at' => 0), array('bookID','bookno', 'booknovol'));
+                $books_item = $this->bookitem_m->get_where_in_bookitem('bookID', $booksByTypesIDs, array('status' => 0, 'deleted_at' => 0), array('bookID', 'bookno', 'booknovol'));
 
-                foreach($books_item as $bookitem) {
+                foreach ($books_item as $bookitem) {
                     $book = $this->book_m->get_single_book(array('bookID' => $bookitem->bookID, 'deleted_at !=' => 1));
                     if (calculate($book)) {
-                        $bookitembarcode = $book->codeno.'-'.$bookitem->bookno.'-'.$bookitem->booknovol.'/'.$book->volume;
+                        $bookitembarcode = $book->codeno . '-' . $bookitem->bookno . '-' . $bookitem->booknovol . '/' . $book->volume;
                         array_push($books, $bookitembarcode);
                     }
                 }
                 $data['books'] = $books;
-                $data['books'] = $data_;   
+                $data['books'] = $data_;
                 die(json_encode($data));
             } else {
                 $data['success'] = 1;
@@ -166,7 +163,7 @@ class Bookissue extends Admin_Controller
 
     public function addfast()
     {
-        
+
         if ($_POST) {
 
             $memberID   = $this->input->post('memberID');
@@ -180,13 +177,13 @@ class Bookissue extends Admin_Controller
             $issue_date = date('Y-m-d H:i:s');
             $member   = $this->member_m->get_single_member(['code' => $memberID]);
             $roleID           = $member->roleID;
-           //    $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'roleID' => $roleID));
+            //    $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'roleID' => $roleID));
             // if (!calculate($libraryconfigure)) {
             //     $libraryconfigure = (object) $this->libraryconfigure_m->libraryconfigure;
             // }
 
             // $booktypes = [];
-            
+
             // if (calculate($libraryconfigure)) {
             //     $booktypes = explode(',', $libraryconfigure->booktype);
             // }
@@ -195,19 +192,17 @@ class Bookissue extends Admin_Controller
             $bookCodes_error_count = 0;
             $test_max_issue_book = 0;
             $list_book_error = [];
-            foreach($bookCodes as $bookcode) {
+            foreach ($bookCodes as $bookcode) {
                 $arrayBookcode = explode('-', $bookcode);
                 $test_max_issue_book = 0;
                 if (empty($arrayBookcode) || count($arrayBookcode) != 3) {
-                    print("\n ok1");
                     $bookCodes_error_count++;
                     continue;
                 }
-                
+
                 $arrayBooknovol = explode('/', $arrayBookcode[2]);
 
                 if (empty($arrayBooknovol) || count($arrayBooknovol) != 2) {
-                    print("\n ok2");
                     $bookCodes_error_count++;
                     continue;
                 }
@@ -215,26 +210,32 @@ class Bookissue extends Admin_Controller
                 $bookCodeno = $arrayBookcode[0];
                 $bookno = $arrayBookcode[1];
                 $booknovol = $arrayBooknovol[0];
-                
+
                 $book     = $this->book_m->get_single_book(['codeno' => $bookCodeno]);
-                
-               
+
+
                 if (!calculate($book)) {
-                    print("\n ok3");
                     $bookCodes_error_count++;
                     continue;
                 }
-                
-                // $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
 
+                $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
+                var_dump($bookitem);
+ die;
                 // if (!calculate($bookitem)) {
                 //     print("\n ok5");
                 //     $bookCodes_error_count++;
                 //     continue;
                 // }
                 // $bookID = $bookitem->bookID;
-                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID,'booktype' => $book->booktypeID));
-                
+
+
+
+
+
+
+                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'booktype' => $book->booktypeID));
+
                 if (empty($libraryconfigure)) {
                     print("\n ok5");
                     $bookCodes_error_count++;
@@ -242,42 +243,42 @@ class Bookissue extends Admin_Controller
                 }
 
                 $typeBook = $this->booktype_m->get_single_booktype(array('booktypeID' => $libraryconfigure->booktype));
-                $bookissue = $this->bookissue_m->test_bookissue($typeBook->booktypeID,$memberID);
+                $bookissue = $this->bookissue_m->test_bookissue($typeBook->booktypeID, $memberID);
 
                 //  print("bookissue count : ".$bookissue);
                 //    print("\n ok \n");
-            
+
 
                 // print("\n fioiin \n");
-               
-                if(  (intval($bookissue)  >= intval($libraryconfigure->max_issue_book)) ){
+
+                if ((intval($bookissue)  >= intval($libraryconfigure->max_issue_book))) {
                     $test_max_issue_book = 1;
                     die(json_encode(['success' => 0]));
                 }
 
-                if($test_max_issue_book == 1){
-                    $list_book_error[] = array("code_book"=>$bookcode,"message"=>"max_issue_book maymkanch ifotha !!") ;
+                if ($test_max_issue_book == 1) {
+                    $list_book_error[] = array("code_book" => $bookcode, "message" => "max_issue_book maymkanch ifotha !!");
                     $bookCodes_error_count++;
                     continue;
-                }      
+                }
 
-        
-               // hayadtha
+
+                // hayadtha
                 // if (!in_array($book->booktypeID, $booktypes)) {
                 //     $bookCodes_error_count++;
                 //     continue;
                 // }
-           
+
 
                 $bookcategoryID = explode(',', trim($book->bookcategoryID, ','))[0];
                 $booktype       = $this->booktype_m->get_single_booktype(['booktypeID' => $book->booktypeID]);
 
                 $expire_date = date('Y-m-d', strtotime($issue_date . "+ $libraryconfigure->per_renew_limit_day days"));
-                
+
                 if ($booktype->bookissue_type == 2) {
-                    $test = new DateTime($booktype->bookissue_date.'-'.date('Y', strtotime('+1 years')));
+                    $test = new DateTime($booktype->bookissue_date . '-' . date('Y', strtotime('+1 years')));
                     $expire_date = date_format($test, 'Y-m-d');
-                } 
+                }
 
 
                 $array['roleID']            = $member->roleID;
@@ -329,18 +330,17 @@ class Bookissue extends Admin_Controller
                 $fineArray['modify_memberID'] = $this->session->userdata('loginmemberID');
                 $fineArray['modify_roleID']   = $this->session->userdata('roleID');
                 $this->finehistory_m->insert_finehistory($fineArray);
-                
+
                 $books_success = $bookCodes_count - $bookCodes_error_count;
-                if(Count($list_book_error) != 0){
-                    $this->session->set_flashdata('success', $books_success.'/'.$bookCodes_count.' Books Success');
+                if (Count($list_book_error) != 0) {
+                    $this->session->set_flashdata('success', $books_success . '/' . $bookCodes_count . ' Books Success');
                 }
             }
 
             $books_success = $bookCodes_count - $bookCodes_error_count;
-            $this->session->set_flashdata('success', $books_success.'/'.$bookCodes_count.' Books Success');
+            $this->session->set_flashdata('success', $books_success . '/' . $bookCodes_count . ' Books Success');
             die(json_encode(['success' => 0]));
             redirect(base_url('bookissue/index'));
-
         } else {
             die(json_encode(['success' => 1]));
             redirect(base_url('bookissue/index'));
@@ -711,7 +711,6 @@ class Bookissue extends Admin_Controller
                 }
 
                 return true;
-                
             } else {
                 return false;
             }
@@ -766,12 +765,12 @@ class Bookissue extends Admin_Controller
             $bookissueID_count = count($bookissueIDarray);
             $bookissueID_error_count = 0;
 
-            foreach($bookissueIDarray as $bookissueID) {
+            foreach ($bookissueIDarray as $bookissueID) {
 
                 if ((int) $bookissueID) {
 
                     $bookissue = $this->bookissue_m->get_single_bookissue(array('bookissueID' => $bookissueID, 'deleted_at' => 0, 'status' => 0, 'renewed' => 1));
-                    
+
                     if (calculate($bookissue)) {
 
                         $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $bookissue->bookID, 'bookno' => $bookissue->bookno, 'status !=' => 2, 'deleted_at' => 0]);
@@ -780,21 +779,18 @@ class Bookissue extends Admin_Controller
                             $this->book_m->update_book(['status' => 0], $bookissue->bookID);
                         }
                         $this->bookissue_m->update_bookissue(['deleted_at' => 1], $bookissueID);
-                        
                     } else {
                         $bookissueID_error_count++;
                     }
                 } else {
                     $bookissueID_error_count++;
                 }
-                
             }
 
             $bookissue_success = $bookissueID_count - $bookissueID_error_count;
 
-            $this->session->set_flashdata('success', $bookissue_success.'/'.$bookissueID_count.' Books Success');
+            $this->session->set_flashdata('success', $bookissue_success . '/' . $bookissueID_count . ' Books Success');
             redirect(base_url('bookissue'));
-
         } else {
             $this->data["subview"] = "_not_found";
             $this->load->view('_main_layout', $this->data);
@@ -814,7 +810,7 @@ class Bookissue extends Admin_Controller
             $bookissueID_count = count($bookissueIDarray);
             $bookissueID_error_count = 0;
 
-            foreach($bookissueIDarray as $bookissueID) {
+            foreach ($bookissueIDarray as $bookissueID) {
                 $result = $this->insert_returnBook($bookissueID);
 
                 if (!$result) {
@@ -824,9 +820,8 @@ class Bookissue extends Admin_Controller
 
             $bookissue_success = $bookissueID_count - $bookissueID_error_count;
 
-            $this->session->set_flashdata('success', $bookissue_success.'/'.$bookissueID_count.' Books Success');
+            $this->session->set_flashdata('success', $bookissue_success . '/' . $bookissueID_count . ' Books Success');
             redirect(base_url('bookissue'));
-
         } else {
             $this->data["subview"] = "_not_found";
             $this->load->view('_main_layout', $this->data);
@@ -1335,5 +1330,4 @@ class Bookissue extends Admin_Controller
         }
         return true;
     }
-
 }
