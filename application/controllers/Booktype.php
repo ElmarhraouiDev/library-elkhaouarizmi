@@ -159,7 +159,7 @@ class Booktype extends Admin_Controller
             array(
                 'field' => 'bookissue_type',
                 'label' => $this->lang->line('booktype_bookissue_type'),
-                'rules' => 'trim|xss_clean|numeric|required',
+                'rules' => 'trim|required|xss_clean',
             ),
             array(
                 'field' => 'bookissue_date',

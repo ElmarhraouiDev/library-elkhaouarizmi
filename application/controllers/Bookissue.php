@@ -1213,6 +1213,8 @@ class Bookissue extends Admin_Controller
                 'label' => $this->lang->line('bookissue_notes'),
                 'rules' => 'trim',
             ),
+           
+            
         );
         return $rules;
     }
