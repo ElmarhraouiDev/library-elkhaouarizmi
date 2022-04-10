@@ -27,9 +27,9 @@
 							  	<label for="bookissue_type"><?=$this->lang->line('booktype_bookissue_type')?></label>
 								  <!-- <span class="text-red"></span> -->
 							  	<?php 
-									$bookissue_typeArray[0] = $this->lang->line('booktype_please_select');
-									$bookissue_typeArray[1] = $this->lang->line('booktype_bookissue_libraryconfig');
-									$bookissue_typeArray[2] = $this->lang->line('booktype_bookissue_fixdate');
+									// $bookissue_typeArray[0] = $this->lang->line('booktype_please_select');
+									$bookissue_typeArray[0] = $this->lang->line('booktype_bookissue_libraryconfig');
+									$bookissue_typeArray[1] = $this->lang->line('booktype_bookissue_fixdate');
 
 									echo form_dropdown('bookissue_type', $bookissue_typeArray, set_value('bookissue_type'),'id="bookissue_type" required class="form-control"');
 								?>
