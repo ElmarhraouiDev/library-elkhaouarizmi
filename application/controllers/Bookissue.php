@@ -218,21 +218,19 @@ class Bookissue extends Admin_Controller
                     $bookCodes_error_count++;
                     continue;
                 }
-
+                // wach kayn item dyal ktab 
                 $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
-                var_dump($bookitem);
- die;
-                // if (!calculate($bookitem)) {
-                //     print("\n ok5");
-                //     $bookCodes_error_count++;
-                //     continue;
-                // }
-                // $bookID = $bookitem->bookID;
-
-
-
-
-
+                if (!calculate($bookitem)) {
+                    print("\n ok5");
+                    $bookCodes_error_count++;
+                    continue;
+                }
+                // wach deja chi wa7d msalaf item dyal ktab
+                $bookitem_test = $this->bookissue_m->test_bookitem($bookno,$book->bookID);
+                if(!$bookitem_test){
+                    $bookCodes_error_count++;
+                    continue;
+                }
 
                 $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'booktype' => $book->booktypeID));
 
