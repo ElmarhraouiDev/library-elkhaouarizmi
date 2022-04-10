@@ -33,8 +33,6 @@ class Booktype extends Admin_Controller
 
     public function add()
     {
-        var_dump("ok");
-        die;
         $this->data['headerassets'] = array(
             'css'      => array(
                 'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
@@ -161,7 +159,7 @@ class Booktype extends Admin_Controller
             array(
                 'field' => 'bookissue_type',
                 'label' => $this->lang->line('booktype_bookissue_type'),
-                'rules' => 'trim|required|xss_clean',
+                'rules' => 'trim|xss_clean|numeric|required',
             ),
             array(
                 'field' => 'bookissue_date',
