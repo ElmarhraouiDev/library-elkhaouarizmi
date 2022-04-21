@@ -69,7 +69,7 @@
 							  	<?php 
                                   $double_bookArray[0] = $this->lang->line('libraryconfigure_no');
 									$double_bookArray[1] = $this->lang->line('libraryconfigure_yes');
-									echo form_dropdown('double_book', $double_bookArray, set_value('double_book'),'id="double_book"  class="form-control"');
+									echo form_dropdown('double_book', $double_bookArray, set_value('double_book'),'id="double_book" name="double_book"  class="form-control"');
 								?>
 							  	<?=form_error('double_book')?>
 							</div>
