@@ -226,7 +226,7 @@ class Bookissue extends Admin_Controller
                     continue;
                 }
                 // wach deja chi wa7d msalaf item dyal ktab
-                $bookitem_test = $this->bookissue_m->test_bookitem($bookno,$book->bookID);
+                $bookitem_test = $this->bookissue_m->test_bookitem($bookno,$book->bookID,$booknovol);
                 if(!$bookitem_test){
                     $bookCodes_error_count++;
                     continue;
