@@ -165,6 +165,11 @@ class Libraryconfigure extends Admin_Controller
                 'rules' => 'trim|xss_clean|required|integer',
             ),
             array(
+                'field' => 'double_book',
+                'label' => $this->lang->line('libraryconfigure_max_issue_book'),
+                'rules' => 'trim|xss_clean|required|integer',
+            ),
+            array(
                 'field' => 'max_renewed_limit',
                 'label' => $this->lang->line('libraryconfigure_max_renewed_limit'),
                 'rules' => 'trim|xss_clean|required|integer',
