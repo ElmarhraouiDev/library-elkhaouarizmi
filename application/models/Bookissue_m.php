@@ -114,7 +114,7 @@ class Bookissue_m extends MY_Model
     }
     // wach user khayd chi haja man had ktab
     public function test_bookitem_v1($bookID,$memberID){
-        $sql = "select * from bookissue where  bookID = $bookID and deleted_at=0 and  and status = 0  and memberCode = '$memberID'";
+        $sql = "select * from bookissue where  bookID = $bookID and deleted_at=0 and  status = 0  and memberCode = '$memberID'";
         $query = $this->db->query( $sql );
         if($query->num_rows()!=0)
           return false;
