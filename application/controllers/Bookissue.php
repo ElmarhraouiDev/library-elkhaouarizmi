@@ -225,9 +225,17 @@ class Bookissue extends Admin_Controller
                     $bookCodes_error_count++;
                     continue;
                 }
-                // wach deja chi wa7d msalaf item dyal ktab
-                $bookitem_test = $this->bookissue_m->test_bookitem($bookno,$book->bookID,$booknovol);
-                if(!$bookitem_test){
+
+                // wach deja chi wa7d msalaf item dyal ktab             open or close
+                $bookitem_test = $this->bookissue_m->test_bookitem($bookno, $book->bookID, $booknovol);
+                if (!$bookitem_test) {
+                    $bookCodes_error_count++;
+                    continue;
+                }
+
+                // wach user khayd chi haja man had ktab
+                $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v1($book->bookID, $memberID);
+                if (!$bookitem_test_v1) {
                     $bookCodes_error_count++;
                     continue;
                 }
@@ -1213,8 +1221,8 @@ class Bookissue extends Admin_Controller
                 'label' => $this->lang->line('bookissue_notes'),
                 'rules' => 'trim',
             ),
-           
-            
+
+
         );
         return $rules;
     }
