@@ -15,4 +15,7 @@ $lang['libraryconfigure_per_renew_limit_day'] = 'لكل يوم حد للتجدي
 $lang['libraryconfigure_book_fine_per_day'] = 'كتاب غرامة في اليوم';
 $lang['libraryconfigure_issue_off_limit_amount'] = 'اصدار حد المبلغ';
 $lang['libraryconfigure_booktype'] = 'نوع الكتاب';
+$lang['libraryconfigure_double_book'] = 'السماح بأكثر من نسخة من الكتاب';
+$lang['libraryconfigure_yes'] = 'نعم';
+$lang['libraryconfigure_no'] = 'لا';
 

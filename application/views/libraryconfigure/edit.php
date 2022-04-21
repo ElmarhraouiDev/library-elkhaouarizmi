@@ -66,6 +66,15 @@
                                 <input type="text" class="form-control" value="<?=set_value('issue_off_limit_amount', $libraryconfigure->issue_off_limit_amount)?>" id="issue_off_limit_amount" name="issue_off_limit_amount"/>
                                 <?=form_error('issue_off_limit_amount')?>
                             </div>
+                            <div class="form-group <?=form_error('double_book') ? 'has-error' : ''?>">
+							  	<label for="double_book"><?=$this->lang->line('libraryconfigure_double_book')?></label>
+							  	<?php 
+									$double_bookArray[0] = $this->lang->line('libraryconfigure_yes');
+									$double_bookArray[1] = $this->lang->line('libraryconfigure_non');
+									echo form_dropdown('double_book', $double_bookArray, set_value('double_book'),'id="double_book"  class="form-control"');
+								?>
+							  	<?=form_error('double_book')?>
+							</div>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-mytheme"><?=$this->lang->line('libraryconfigure_update_libraryconfigure')?></button>

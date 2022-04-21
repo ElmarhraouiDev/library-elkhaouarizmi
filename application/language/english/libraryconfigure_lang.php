@@ -16,4 +16,7 @@ $lang['libraryconfigure_per_renew_limit_day']     = "Per Renew Limit Day";
 $lang['libraryconfigure_book_fine_per_day']       = "Book Fine Per Day";
 $lang['libraryconfigure_issue_off_limit_amount']  = "Issue Off Limit Amount";
 $lang['libraryconfigure_booktype'] = 'Book Type';
+$lang['libraryconfigure_double_book'] = 'Allow from a copy of the book';
+$lang['libraryconfigure_yes'] = 'Yes';
+$lang['libraryconfigure_no'] = 'No';
 

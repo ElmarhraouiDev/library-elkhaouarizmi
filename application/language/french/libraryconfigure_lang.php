@@ -15,4 +15,6 @@ $lang['libraryconfigure_per_renew_limit_day'] = 'সীমাবদ্ধতা�
 $lang['libraryconfigure_book_fine_per_day'] = 'ভাল দিন প্রতি বই';
 $lang['libraryconfigure_issue_off_limit_amount'] = 'সীমা ছাড়ার পরিমাণ ইস্যু করুন';
 $lang['libraryconfigure_booktype'] = 'Book Type';
-
+$lang['libraryconfigure_double_book'] = 'Allow from a copy of the book';
+$lang['libraryconfigure_yes'] = 'Yes';
+$lang['libraryconfigure_no'] = 'No';

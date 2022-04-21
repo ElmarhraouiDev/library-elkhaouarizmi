@@ -15,4 +15,6 @@ $lang['libraryconfigure_per_renew_limit_day'] = 'प्रति दिन स�
 $lang['libraryconfigure_book_fine_per_day'] = 'प्रति दिन बुक फ़ाइन';
 $lang['libraryconfigure_issue_off_limit_amount'] = 'सीमा राशि जारी करना';
 $lang['libraryconfigure_booktype'] = 'Book Type';
-
+$lang['libraryconfigure_double_book'] = 'Allow from a copy of the book';
+$lang['libraryconfigure_yes'] = 'Yes';
+$lang['libraryconfigure_no'] = 'No';
