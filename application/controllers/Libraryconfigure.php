@@ -166,7 +166,7 @@ class Libraryconfigure extends Admin_Controller
             ),
             array(
                 'field' => 'double_book',
-                'label' => $this->lang->line('libraryconfigure_max_issue_book'),
+                'label' => $this->lang->line('libraryconfigure_double_book'),
                 'rules' => 'trim|xss_clean|required|integer',
             ),
             array(
