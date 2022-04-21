@@ -64,6 +64,12 @@
                                 <input type="text" class="form-control" value="<?=set_value('issue_off_limit_amount')?>" id="issue_off_limit_amount" name="issue_off_limit_amount"/>
                                 <?=form_error('issue_off_limit_amount')?>
                             </div>
+                            <div class="form-group <?=form_error('double_book') ? 'has-error' : ''?>">
+                                <label for="double_book"><?=$this->lang->line('libraryconfigure_double_book')?></label> <span class="text-red">*</span>
+                                <input type="text" class="form-control" value="<?=set_value('double_book')?>" id="double_book" name="double_book"/>
+                                <?=form_error('double_book')?>
+                            </div>
+                            
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-mytheme"><?=$this->lang->line('libraryconfigure_add_libraryconfigure')?></button>

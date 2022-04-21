@@ -218,10 +218,17 @@ class Bookissue extends Admin_Controller
                     $bookCodes_error_count++;
                     continue;
                 }
+
+                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'booktype' => $book->booktypeID));
+                if (empty($libraryconfigure)) {
+                    print("\n ok5");
+                    $bookCodes_error_count++;
+                    continue;
+                }
+
                 // wach kayn item dyal ktab 
                 $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
                 if (!calculate($bookitem)) {
-                    print("\n ok5");
                     $bookCodes_error_count++;
                     continue;
                 }
@@ -234,20 +241,15 @@ class Bookissue extends Admin_Controller
                 }
 
                 // wach user khayd chi haja man had ktab
-                $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v1($book->bookID, $memberID);
-                if (!$bookitem_test_v1) {
-                    $bookCodes_error_count++;
-                    continue;
+                if($libraryconfigure->double_book == 0){
+                    $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v1($book->bookID, $memberID);
+                    if (!$bookitem_test_v1) {
+                        $bookCodes_error_count++;
+                        continue;
+                    }
                 }
-
-                $libraryconfigure = $this->libraryconfigure_m->get_single_libraryconfigure(array('roleID' => $roleID, 'booktype' => $book->booktypeID));
-
-                if (empty($libraryconfigure)) {
-                    print("\n ok5");
-                    $bookCodes_error_count++;
-                    continue;
-                }
-
+              
+                
                 $typeBook = $this->booktype_m->get_single_booktype(array('booktypeID' => $libraryconfigure->booktype));
                 $bookissue = $this->bookissue_m->test_bookissue($typeBook->booktypeID, $memberID);
 
@@ -256,6 +258,9 @@ class Bookissue extends Admin_Controller
 
 
                 // print("\n fioiin \n");
+
+
+                
 
                 if ((intval($bookissue)  >= intval($libraryconfigure->max_issue_book))) {
                     $test_max_issue_book = 1;
