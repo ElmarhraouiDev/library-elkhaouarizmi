@@ -66,15 +66,20 @@
                                 <input type="text" class="form-control" value="<?=set_value('issue_off_limit_amount', $libraryconfigure->issue_off_limit_amount)?>" id="issue_off_limit_amount" name="issue_off_limit_amount"/>
                                 <?=form_error('issue_off_limit_amount')?>
                             </div>
-                            <div class="form-group <?=form_error('double_book') ? 'has-error' : ''?>">
+                            <!-- <div class="form-group <?=form_error('double_book') ? 'has-error' : ''?>">
 							  	<label for="double_book"><?=$this->lang->line('libraryconfigure_double_book')?></label>
 							  	<?php 
 							       $double_bookArray[0] = $this->lang->line('libraryconfigure_no');
                                    $double_bookArray[1] = $this->lang->line('libraryconfigure_yes');
-									echo form_dropdown('double_book', $double_bookArray, set_value('double_book'),'id="double_book"  name="double_book"    class="form-control"');
+									// echo form_dropdown('double_book', $double_bookArray, set_value('double_book'),'id="double_book"  name="double_book"    class="form-control"');
 								?>
-							  	<?=form_error('double_book')?>
-							</div>
+							</div> -->
+
+                            <fieldset>
+<legend>Choose Business Type:</legend><br>
+<input type="radio" name="double_book" value="0"> 	<?php echo $double_bookArray[0] ?> </input>
+<input type="radio" name="double_book" value="1">	<?php echo $double_bookArray[1] ?> /input>
+</fieldset>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-mytheme"><?=$this->lang->line('libraryconfigure_update_libraryconfigure')?></button>
