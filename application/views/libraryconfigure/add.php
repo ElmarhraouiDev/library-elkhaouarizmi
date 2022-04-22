@@ -75,7 +75,7 @@
                             <fieldset>
 <legend>Choose Business Type:</legend><br>
 <input type="radio" name="double_book" value="0"> 	<?php echo $double_bookArray[0] ?> </input>
-<input type="radio" name="double_book" value="1">	<?php echo $double_bookArray[1] ?> /input>
+<input type="radio" name="double_book" value="1">	<?php echo $double_bookArray[1] ?> </input>
 </fieldset>
                             
                         </div>
