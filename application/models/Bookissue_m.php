@@ -107,8 +107,7 @@ class Bookissue_m extends MY_Model
     public function test_bookitem($bookno,$bookID,$bookNovol){
         $sql = "select * from bookissue where bookno='$bookno' and bookID = '$bookID' and deleted_at=0 and booknovol='$bookNovol' and status = 0";
         $query = $this->db->query( $sql );
-        dump($query);
-        die;
+        return $query;
         if($query->num_rows()!=0)
           return false;
         return true;

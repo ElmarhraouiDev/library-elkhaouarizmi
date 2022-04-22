@@ -235,6 +235,8 @@ class Bookissue extends Admin_Controller
 
                 // wach deja chi wa7d msalaf item dyal ktab             open or close
                 $bookitem_test = $this->bookissue_m->test_bookitem($bookno, $book->bookID, $booknovol);
+                dump($bookitem_test);
+                die;
                 if (!$bookitem_test) {
                     $bookCodes_error_count++;
                     continue;
