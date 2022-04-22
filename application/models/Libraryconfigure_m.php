@@ -8,7 +8,7 @@ class Libraryconfigure_m extends MY_Model
     protected $_primary_key = 'libraryconfigureID';
     protected $_order_by    = "libraryconfigureID desc";
 
-    public $libraryconfigure = ['roleID' => 0, 'max_issue_book' => 0, 'max_renewed_limit' => 0, 'per_renew_limit_day' => 0, 'book_fine_per_day' => 0, 'issue_off_limit_amount' => 0];
+    public $libraryconfigure = ['roleID' => 0, 'max_issue_book' => 0, 'max_renewed_limit' => 0, 'per_renew_limit_day' => 0, 'book_fine_per_day' => 0, 'issue_off_limit_amount' => 0, 'double_book' => 0];
 
     public function __construct()
     {

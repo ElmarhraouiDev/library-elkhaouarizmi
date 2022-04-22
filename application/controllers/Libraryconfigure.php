@@ -61,7 +61,7 @@ class Libraryconfigure extends Admin_Controller
                 $array['per_renew_limit_day']    = $this->input->post('per_renew_limit_day');
                 $array['book_fine_per_day']      = $this->input->post('book_fine_per_day');
                 $array['issue_off_limit_amount'] = $this->input->post('issue_off_limit_amount');
-                $array['double_book'] = $this->input->post('double_book');
+                $array['double_book']            = $this->input->post('double_book');
                 $array['booktype']               = implode(',', $this->input->post('booktypeID'));
                 $this->libraryconfigure_m->insert_libraryconfigure($array);
 
