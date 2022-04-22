@@ -75,7 +75,7 @@
 								?>
 							  	<?=form_error('double_book')?>
 							</div>
-                            <div class="form-group <?=form_error('doudouble_volumeble_book') ? 'has-error' : ''?>">
+                            <div class="form-group <?=form_error('double_book') ? 'has-error' : ''?>">
 							  	<label for="double_volume"><?=$this->lang->line('libraryconfigure_double_volume')?></label>
 							  	<?php 
 							       $double_volumeArray[0] = $this->lang->line('libraryconfigure_no');
