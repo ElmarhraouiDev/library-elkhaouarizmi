@@ -210,6 +210,8 @@ class Bookissue extends Admin_Controller
                 $bookCodeno = $arrayBookcode[0];
                 $bookno = $arrayBookcode[1];
                 $booknovol = $arrayBooknovol[0];
+                print($booknovol);
+                die;
 
                 $book     = $this->book_m->get_single_book(['codeno' => $bookCodeno]);
 
@@ -235,8 +237,6 @@ class Bookissue extends Admin_Controller
 
                 // wach deja chi wa7d msalaf item dyal ktab             open or close
                 $bookitem_test = $this->bookissue_m->test_bookitem($bookno, $book->bookID, $booknovol);
-                dump($bookitem_test);
-                die;
                 if (!$bookitem_test) {
                     $bookCodes_error_count++;
                     continue;
@@ -353,10 +353,10 @@ class Bookissue extends Admin_Controller
             $books_success = $bookCodes_count - $bookCodes_error_count;
             $this->session->set_flashdata('success', $books_success . '/' . $bookCodes_count . ' Books Success');
             die(json_encode(['success' => 0]));
-       //    redirect(base_url('bookissue/index'));
+            redirect(base_url('bookissue/index'));
         } else {
             die(json_encode(['success' => 1]));
-        //    redirect(base_url('bookissue/index'));
+            redirect(base_url('bookissue/index'));
         }
     }
 
