@@ -139,15 +139,15 @@ class Bookissue extends Admin_Controller
 
                 $booksByTypesIDs = pluck($booksByTypes, 'bookID');
 
-                $books_item = $this->bookitem_m->get_where_in_bookitem('bookID', $booksByTypesIDs, array('status' => 0, 'deleted_at' => 0), array('bookID', 'bookno', 'booknovol'));
+                // $books_item = $this->bookitem_m->get_where_in_bookitem('bookID', $booksByTypesIDs, array('status' => 0, 'deleted_at' => 0), array('bookID', 'bookno', 'booknovol'));
 
-                foreach ($books_item as $bookitem) {
-                    $book = $this->book_m->get_single_book(array('bookID' => $bookitem->bookID, 'deleted_at !=' => 1));
-                    if (calculate($book)) {
-                        $bookitembarcode = $book->codeno . '-' . $bookitem->bookno . '-' . $bookitem->booknovol . '/' . $book->volume;
-                        array_push($books, $bookitembarcode);
-                    }
-                }
+                // foreach ($books_item as $bookitem) {
+                //     $book = $this->book_m->get_single_book(array('bookID' => $bookitem->bookID, 'deleted_at !=' => 1));
+                //     if (calculate($book)) {
+                //         $bookitembarcode = $book->codeno . '-' . $bookitem->bookno . '-' . $bookitem->booknovol . '/' . $book->volume;
+                //         array_push($books, $bookitembarcode);
+                //     }
+                // }
                 $data['books'] = $books;
                 $data['books'] = $data_;
                 die(json_encode($data));
@@ -225,11 +225,13 @@ class Bookissue extends Admin_Controller
                 }
 
                 // wach kayn item dyal ktab 
-                $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol, 'status' => 0]);
+                $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol,'status' => 0, 'deleted_at' => 0]);
                 if (!calculate($bookitem)) {
                     $bookCodes_error_count++;
                     continue;
                 }
+
+                /*
 
                 // wach deja chi wa7d msalaf item dyal ktab             open or close
                 $bookitem_test = $this->bookissue_m->test_bookitem($bookno, $book->bookID, $booknovol);
@@ -246,6 +248,7 @@ class Bookissue extends Admin_Controller
                         continue;
                     }
                 }
+                */
               
                 
                 $typeBook = $this->booktype_m->get_single_booktype(array('booktypeID' => $libraryconfigure->booktype));
