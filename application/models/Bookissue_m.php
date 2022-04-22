@@ -105,7 +105,7 @@ class Bookissue_m extends MY_Model
     }
     // WACH MOKIN HAD item it3ta ba3da wla la
     public function test_bookitem($bookno,$bookID,$bookNovol){
-        $sql = "select * from bookissue where bookno='$bookno' and bookID = $bookID and deleted_at=0 and booknovol=$bookNovol and status = 0";
+        $sql = "select * from bookissue where bookno='$bookno' and bookID = '$bookID' and deleted_at=0 and booknovol='$bookNovol' and status = 0";
         $query = $this->db->query( $sql );
         if($query->num_rows()!=0)
           return false;
