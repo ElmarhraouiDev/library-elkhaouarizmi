@@ -224,31 +224,34 @@ class Bookissue extends Admin_Controller
                     continue;
                 }
 
-                // wach kayn item dyal ktab 
+                 // wach deja chi wa7d msalaf item dyal ktab             open or close
                 $bookitem = $this->bookitem_m->get_single_bookitem(['bookID' => $book->bookID, 'bookno' => $bookno, 'booknovol' => $booknovol,'status' => 0, 'deleted_at' => 0]);
                 if (!calculate($bookitem)) {
                     $bookCodes_error_count++;
                     continue;
                 }
 
-                /*
+                
 
-                // wach deja chi wa7d msalaf item dyal ktab             open or close
-                $bookitem_test = $this->bookissue_m->test_bookitem($bookno, $book->bookID, $booknovol);
-                if (!$bookitem_test) {
-                    $bookCodes_error_count++;
-                    continue;
-                }
-
-                // wach user khayd chi haja man had ktab
+                // wach user khayd nafss ktab ms quantity khra 
                 if($libraryconfigure->double_book == 0){
-                    $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v1($book->bookID, $memberID);
+                    $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v1($book->bookID, $booknovol,$memberID);
                     if (!$bookitem_test_v1) {
                         $bookCodes_error_count++;
                         continue;
                     }
                 }
-                */
+
+                // wach user bayakhd chi joz2 akhor ou ba9i maraja3ch joz2 9dim
+
+                // if($libraryconfigure->double_voulum == 0){
+                //     $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v2($book->bookID, $bookno,$memberID);
+                //     if (!$bookitem_test_v1) {
+                //         $bookCodes_error_count++;
+                //         continue;
+                //     }
+                // }
+                
               
                 
                 $typeBook = $this->booktype_m->get_single_booktype(array('booktypeID' => $libraryconfigure->booktype));

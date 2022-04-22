@@ -113,29 +113,21 @@ class Bookissue_m extends MY_Model
         
     }
     // wach user khayd chi haja man had ktab
-    public function test_bookitem_v1($bookID,$memberID){
-        $sql = "select * from bookissue where  bookID = $bookID and deleted_at=0 and  status = 0  and memberCode = '$memberID'";
+    public function test_bookitem_v1($bookID,$booknovol,$memberID){
+        $sql = "select * from bookissue where  bookID = $bookID and deleted_at=0 and  status = 0  and memberCode = '$memberID' and booknovol ='$booknovol'";
         $query = $this->db->query( $sql );
         if($query->num_rows()!=0)
           return false;
         return true;
     }
-    // wach user khay
-    // public function test_bookitem_v2($bookID,$bookno){
-    //     $sql = "select * from bookissue where   bookno='$bookno' and bookID = $bookID and deleted_at=0 and  and status = 0";
-    //     $query = $this->db->query( $sql );
-    //     if($query->num_rows()!=0)
-    //       return false;
-    //     return true;
-    // }
-
-    // public function test_bookitem_v3($bookID,$bookno){
-    //     $sql = "select * from bookissue where bookno='$bookno' and bookID = $bookID and deleted_at=0 and booknovol=$bookNovol and status = 0";
-    //     $query = $this->db->query( $sql );
-    //     if($query->num_rows()!=0)
-    //       return false;
-    //     return true;
-    // }
+    // wach user bayakhd chi joz2 akhor ou ba9i maraja3ch joz2 9dim
+    public function test_bookitem_v2($bookID,$bookno,$memberID){
+        $sql = "select * from bookissue where  bookID = $bookID and deleted_at=0 and  status = 0  and memberCode = '$memberID' and bookno ='$bookno'";
+        $query = $this->db->query( $sql );
+        if($query->num_rows()!=0)
+          return false;
+        return true;
+    }
 
 
 
