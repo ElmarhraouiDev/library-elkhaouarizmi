@@ -18,4 +18,7 @@ $lang['libraryconfigure_booktype'] = 'نوع الكتاب';
 $lang['libraryconfigure_double_book'] = 'السماح بأكثر من نسخة من الكتاب';
 $lang['libraryconfigure_yes'] = 'نعم';
 $lang['libraryconfigure_no'] = 'لا';
+$lang['libraryconfigure_double_volume'] = ' السماح بأكثر من نسخة من الكتاب من نفس الجزء';
+
+
 

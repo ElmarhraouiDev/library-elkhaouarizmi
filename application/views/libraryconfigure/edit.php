@@ -75,6 +75,16 @@
 								?>
 							  	<?=form_error('double_book')?>
 							</div>
+                            <div class="form-group <?=form_error('doudouble_volumeble_book') ? 'has-error' : ''?>">
+							  	<label for="double_volume"><?=$this->lang->line('libraryconfigure_double_volume')?></label>
+							  	<?php 
+							       $double_volumeArray[0] = $this->lang->line('libraryconfigure_no');
+                                   $double_volumeArray[1] = $this->lang->line('libraryconfigure_yes');
+									echo form_dropdown('double_volume', $double_volumeArray, set_value('double_book',$libraryconfigure->double_volume),'id="double_volume"  name="double_volume"    class="form-control"');
+								?>
+							  	<?=form_error('double_volume')?>
+							</div>
+                            
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-mytheme"><?=$this->lang->line('libraryconfigure_update_libraryconfigure')?></button>

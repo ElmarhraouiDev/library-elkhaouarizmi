@@ -244,13 +244,13 @@ class Bookissue extends Admin_Controller
 
                 // wach user bayakhd chi joz2 akhor ou ba9i maraja3ch joz2 9dim
 
-                // if($libraryconfigure->double_voulum == 0){
-                //     $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v2($book->bookID, $bookno,$memberID);
-                //     if (!$bookitem_test_v1) {
-                //         $bookCodes_error_count++;
-                //         continue;
-                //     }
-                // }
+                if($libraryconfigure->double_volume == 0){
+                    $bookitem_test_v1 = $this->bookissue_m->test_bookitem_v2($book->bookID, $bookno,$memberID);
+                    if (!$bookitem_test_v1) {
+                        $bookCodes_error_count++;
+                        continue;
+                    }
+                }
                 
               
                 

@@ -62,6 +62,7 @@ class Libraryconfigure extends Admin_Controller
                 $array['book_fine_per_day']      = $this->input->post('book_fine_per_day');
                 $array['issue_off_limit_amount'] = $this->input->post('issue_off_limit_amount');
                 $array['double_book']            = $this->input->post('double_book');
+                $array['double_volume']            = $this->input->post('double_volume');
                 $array['booktype']               = implode(',', $this->input->post('booktypeID'));
                 $this->libraryconfigure_m->insert_libraryconfigure($array);
                 $this->session->set_flashdata('success', 'Success11');
@@ -110,6 +111,7 @@ class Libraryconfigure extends Admin_Controller
                         $array['book_fine_per_day']      = $this->input->post('book_fine_per_day');
                         $array['issue_off_limit_amount'] = $this->input->post('issue_off_limit_amount');
                         $array['double_book'] = $this->input->post('double_book');
+                        $array['double_volume'] = $this->input->post('double_volume');
                         $array['booktype']               = implode(',', $this->input->post('booktypeID'));
 
                         $this->libraryconfigure_m->update_libraryconfigure($array, $libraryconfigureID);
@@ -161,6 +163,11 @@ class Libraryconfigure extends Admin_Controller
             array(
                 'field' => 'max_issue_book',
                 'label' => $this->lang->line('libraryconfigure_max_issue_book'),
+                'rules' => 'trim|xss_clean|required|integer',
+            ),
+            array(
+                'field' => 'double_volume',
+                'label' => $this->lang->line('libraryconfigure_double_book'),
                 'rules' => 'trim|xss_clean|required|integer',
             ),
             array(

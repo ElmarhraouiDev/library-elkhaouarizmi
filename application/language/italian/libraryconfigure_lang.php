@@ -18,3 +18,4 @@ $lang['libraryconfigure_booktype'] = 'Book Type';
 $lang['libraryconfigure_double_book'] = 'Allow from a copy of the book';
 $lang['libraryconfigure_yes'] = 'Yes';
 $lang['libraryconfigure_no'] = 'No';
+$lang['libraryconfigure_double_volume'] = 'Allow from a copy of the same part of the book';
