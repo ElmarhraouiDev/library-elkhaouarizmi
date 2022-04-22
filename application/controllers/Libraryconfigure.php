@@ -64,7 +64,8 @@ class Libraryconfigure extends Admin_Controller
                 $array['double_book']            = $this->input->post('double_book');
                 $array['booktype']               = implode(',', $this->input->post('booktypeID'));
                 $this->libraryconfigure_m->insert_libraryconfigure($array);
-
+                dump($this->input->post('double_book'));
+                die;
                 $this->session->set_flashdata('success', 'Success11');
                 redirect(base_url('libraryconfigure/index'));
             }
