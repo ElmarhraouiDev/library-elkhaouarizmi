@@ -353,10 +353,10 @@ class Bookissue extends Admin_Controller
             $books_success = $bookCodes_count - $bookCodes_error_count;
             $this->session->set_flashdata('success', $books_success . '/' . $bookCodes_count . ' Books Success');
             die(json_encode(['success' => 0]));
-            redirect(base_url('bookissue/index'));
+       //    redirect(base_url('bookissue/index'));
         } else {
             die(json_encode(['success' => 1]));
-            redirect(base_url('bookissue/index'));
+        //    redirect(base_url('bookissue/index'));
         }
     }
 
