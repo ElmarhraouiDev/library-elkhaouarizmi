@@ -10,6 +10,11 @@
         <div class="box box-mytheme">
             <?php if(permissionChecker('member_add')) { ?>
                 <div class="box-header">
+                    <div>
+                    <form action="<?=base_url('member/import2')?>" method="post" enctype="multipart/form-data">
+                    <input type="file" name="fileupload" accept=".xlsx, .xls, .csv" id="fileupload" required/>
+                    </form>
+                    </div>
                     <a style="margin-right: 5px;" href="<?=base_url('member/add')?>" class="btn btn-inline btn-mytheme btn-md pull-left"><i class="fa fa-plus"></i> <?=$this->lang->line('member_add_member')?></a> 
                     <a href="#" data-toggle="modal" data-target="#import" class="btn btn-inline btn-mytheme btn-md"><i class="fa fa-upload"></i> <?=$this->lang->line('member_import_member')?></a>
                     <div class="col-sm-3 pull-right">

@@ -253,6 +253,11 @@ class Member extends Admin_Controller
         }
     }
 
+    public function import2()
+    {
+          echo "ok";
+    }
+
     public function import()
     {
         $gender         = array('Female', 'Male');
