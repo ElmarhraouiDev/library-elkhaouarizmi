@@ -12,7 +12,9 @@
                 <div class="box-header">
                     <div>
                     <form action="<?=base_url('member/import2')?>" method="post" enctype="multipart/form-data">
-                    <input type="file" name="fileupload" accept=".xlsx, .xls, .csv" id="fileupload" required/>
+                        <input type="file" name="fileupload" accept=".xlsx, .xls, .csv" id="fileupload" required/>
+                    <button type="submit" value="submit" name="submit" class="btn btn-inline btn-mytheme btn-md"><?=$this->lang->line('member_import')?></button>
+
                     </form>
                     </div>
                     <a style="margin-right: 5px;" href="<?=base_url('member/add')?>" class="btn btn-inline btn-mytheme btn-md pull-left"><i class="fa fa-plus"></i> <?=$this->lang->line('member_add_member')?></a> 
