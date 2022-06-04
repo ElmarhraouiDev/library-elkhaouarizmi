@@ -164,11 +164,9 @@
     };
     var All_Class = [];
 
-    function import2() {
+ async  function import2() {
         XLSX.utils.json_to_sheet(data, 'out.xlsx');
-
-        setTimeout({
-            if (selectedFile) {
+        if (selectedFile) {
             let fileReader = new FileReader();
             fileReader.readAsBinaryString(selectedFile);
             fileReader.onload = (event) => {
@@ -177,7 +175,7 @@
                     type: "binary"
                 });
                 workbook.SheetNames.forEach((sheet) => {
-                    let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+                    let rowObject = await XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
                     All_groups.push(rowObject[3].__EMPTY_17);
                     let new_class_rom = Object.assign({}, class_rom);
                     new_class_rom.group = rowObject[3].__EMPTY_17;
@@ -206,14 +204,13 @@
                     // document.getElementById("jsondata").innerHTML = JSON.stringify(rowObject, undefined, 4)
                 });
             }
-            console.log(data_json);
-            console.log(All_groups);
-            console.log(All_Class);
+            // console.log(data_json);
+            // console.log(All_groups);
+            // console.log(All_Class);
+            console.log(data_json)
             document.getElementById("data_json").value= JSON.stringify(data_json);
             return true;
         }
-        },5000)
-      
     };
 
   
