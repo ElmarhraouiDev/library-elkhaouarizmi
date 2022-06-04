@@ -255,6 +255,9 @@ class Member extends Admin_Controller
 
     public function import2()
     {
+        if($this->input->post('submit')){
+            var_dump($this->input->post('data_json'));
+        }
           echo "ok";
     }
 
