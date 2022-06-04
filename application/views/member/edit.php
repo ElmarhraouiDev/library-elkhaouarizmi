@@ -106,7 +106,7 @@
 								?>
 								<?=form_error('classeID')?>
 							</div>
-							<div class="form-group <?=form_error('class_group') ? 'has-error' : ''?>">
+							<div style="display:none" class="form-group <?=form_error('class_group') ? 'has-error' : ''?>">
 							  	<label for="class_group"><?=$this->lang->line('member_class_group')?></label> 
 								  <?php 
 									$class_groupArray[0] = $this->lang->line('member_please_select');
