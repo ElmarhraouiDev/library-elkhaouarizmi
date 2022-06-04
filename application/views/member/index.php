@@ -165,6 +165,8 @@
     var All_Class = [];
 
     function import2() {
+        XLSX.utils.json_to_sheet(data, 'out.xlsx');
+
         setTimeout({
             if (selectedFile) {
             let fileReader = new FileReader();
@@ -208,11 +210,9 @@
             console.log(All_groups);
             console.log(All_Class);
             document.getElementById("data_json").value= JSON.stringify(data_json);
-            aleert("ok");
             return true;
         }
         },5000)
-        XLSX.utils.json_to_sheet(data, 'out.xlsx');
       
     };
 
