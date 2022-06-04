@@ -126,6 +126,7 @@
         <!-- Import -->
     </section>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
 
 <script>
     let selectedFile;
