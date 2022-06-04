@@ -102,18 +102,19 @@
 								?>
 								<?=form_error('classeID')?>
 							</div>
-							<div class="form-group <?=form_error('class_group') ? 'has-error' : ''?>">
+							<div style="display:none" class="form-group <?=form_error('class_group') ? 'has-error' : ''?>">
 							  	<label for="class_group"><?=$this->lang->line('member_class_group')?></label>
 								  <?php 
-									$class_groupArray[0] = $this->lang->line('member_please_select');
-									$class_groupArray['A'] = 'A';
-									$class_groupArray['B'] = 'B';
-									$class_groupArray['C'] = 'C';
-									$class_groupArray['D'] = 'D';
+									// $class_groupArray[0] = $this->lang->line('member_please_select');
+									// $class_groupArray['A'] = 'A';
+									// $class_groupArray['B'] = 'B';
+									// $class_groupArray['C'] = 'C';
+									// $class_groupArray['D'] = 'D';
 
-									echo form_dropdown('class_group', $class_groupArray, set_value('class_group'),'id="class_group" class="form-control"');
-								?>							  	
-								  	<?=form_error('class_group')?>
+									// echo form_dropdown('class_group', $class_groupArray, set_value('class_group'),'id="class_group" class="form-control"');
+								?>
+								    <input type="text" id="class_group" name="class_group" value="<?=set_value('class_group')?>" >							  	
+								  	<!-- <?=form_error('class_group') ?> -->
 							</div>
 							<div class="form-group <?=form_error('status') ? 'has-error' : ''?>">
 							  	<label for="status"><?=$this->lang->line('member_status')?></label> <span class="text-red">*</span>

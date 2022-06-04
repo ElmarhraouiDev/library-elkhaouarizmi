@@ -293,8 +293,7 @@ class Member extends Admin_Controller
 
                     $membres_count = count($allDataInSheet) - 1;
                     $membres_error_count = 0;
-                    var_dump($allDataInSheet);
-                    die;
+
                     foreach ($allDataInSheet as $value) {
                         if($flag){
                             $flag =false;
